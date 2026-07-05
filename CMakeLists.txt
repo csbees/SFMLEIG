@@ -2,18 +2,19 @@ cmake_minimum_required(VERSION 3.29.1)
 
 project(SFMLEIG)
 
-target_link_libraries(
-      ${CMAKE_PROJECT_NAME}
-        sfml-graphics
-        sfml-window
-        sfml-system
-        sfml-audio
-)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-add_subdirectory(Third\ Party/SFML-3.0.0)
+include(FetchContent)
+FetchContent_Declare(SFML
+        GIT_REPOSITORY https://github.com/SFML/SFML.git
+        GIT_TAG 3.1.0
+        GIT_SHALLOW ON
+        EXCLUDE_FROM_ALL
+        SYSTEM)
+FetchContent_MakeAvailable(SFML)
 
 add_executable(
-     ${CMAKE_PROJECT_NAME}
+        ${CMAKE_PROJECT_NAME}
         Scripts/main.cpp
         # ENGINE ———
         "Engine Systems/logger.cpp"
@@ -26,5 +27,13 @@ add_executable(
         "Engine Systems/Managers/Game.h"
         "Engine Systems/Managers/Menu_Manager.cpp"
         "Engine Systems/Managers/Menu_Manager.h"
+        "Engine Systems/Managers/Object_Manager.cpp"
+        "Engine Systems/Managers/Object_Manager.h"
 
 )
+
+target_compile_features(${CMAKE_PROJECT_NAME} PRIVATE cxx_std_17)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE SFML::Graphics)
+
+
+

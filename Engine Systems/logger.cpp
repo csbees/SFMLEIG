@@ -51,26 +51,6 @@ logger::~logger()
     }
 }
 
-bool logger::log_error(const std::string& error, const std::string& author)
-{
-    if (debug_mode == false) return true;
-    auto time = std::chrono::system_clock::now();
-    std::time_t end_time = std::chrono::system_clock::to_time_t(time);
-
-    has_logged = true;
-    std::ofstream log(file_path, std::fstream::app);
-
-    log << "\n-----------\n"
-        << "[ERROR] by [" << author << "] at " << std::ctime(&end_time)
-        << "\n[" << error << "]\n"
-        << "\n-----------\n";
-
-    log.flush();
-    log.close();
-
-    return true;
-}
-
 bool logger::log_info(const std::string& info, const std::string& author)
 {
     if (debug_mode == false) return true;
@@ -91,5 +71,26 @@ bool logger::log_info(const std::string& info, const std::string& author)
 
     return true;
 }
+
+bool logger::log_error(const std::string& error, const std::string& author)
+{
+    if (debug_mode == false) return true;
+    auto time = std::chrono::system_clock::now();
+    std::time_t end_time = std::chrono::system_clock::to_time_t(time);
+
+    has_logged = true;
+    std::ofstream log(file_path, std::fstream::app);
+
+    log << "\n-----------\n"
+        << "[ERROR] by [" << author << "] at " << std::ctime(&end_time)
+        << "\n[" << error << "]\n"
+        << "\n-----------\n";
+
+    log.flush();
+    log.close();
+
+    return true;
+}
+
 
 

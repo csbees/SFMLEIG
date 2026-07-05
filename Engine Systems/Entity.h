@@ -17,12 +17,12 @@ public:
     {
         if (sprite_file == "-1")
         {
-            log.log_error("Failed to load sprite, sprite_file is missing","Paddle()");
+            log->log_error("Failed to load sprite, sprite_file is missing","Paddle()");
             return;
         } std::cout << sprite_file << '\n';
         if (!texture.loadFromFile(sprite_file))
         {
-            log.log_error("Failed to load sprite, loadFromFile() failed","Paddle()");
+            log->log_error("Failed to load sprite, loadFromFile() failed","Paddle()");
             return;
         }
         sf::Sprite the_sprite(texture);
@@ -38,11 +38,10 @@ public:
 
     Draw_node node;
 
-    // TODO: Some how only have on logger, pointer to one?
-    logger log;
+    logger* log = nullptr;
 
-    float x_ = 3;
-    float y_ = 100;
+    float x_;
+    float y_;
 
     float delta_time;
 

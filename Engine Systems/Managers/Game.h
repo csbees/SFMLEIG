@@ -10,7 +10,9 @@ class Game
 {
 public:
     // Runs the game
-    virtual void run_game();
+    virtual void run_game() = 0;
+    virtual void init() = 0;
+
     virtual ~Game() {}
 
 };
