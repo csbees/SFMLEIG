@@ -2,52 +2,49 @@
 // Created by chris on 6/30/26.
 //
 
-#ifndef ENTITY_H
-#define ENTITY_H
-#include "logger.h"
+#pragma once
+
 #include <SFML/Graphics.hpp>
 
-#include "../Engine Systems/logger.h"
-#include "../Engine Systems/Draw_node.h"
+#include "Render_engine.h"
+#include "logger.h"
+#include "Draw_node.h"
 
 class Entity
 {
 public:
-    explicit Entity(const std::string& sprite_file = "-1")
-    {
-        if (sprite_file == "-1")
-        {
-            log->log_error("Failed to load sprite, sprite_file is missing","Paddle()");
-            return;
-        } std::cout << sprite_file << '\n';
-        if (!texture.loadFromFile(sprite_file))
-        {
-            log->log_error("Failed to load sprite, loadFromFile() failed","Paddle()");
-            return;
-        }
-        sf::Sprite the_sprite(texture);
-        the_sprite.setPosition(x_,y_);
+    Draw_node node;
+    logger* log = nullptr;
 
-        node.sprite = the_sprite;
-    }
+    sf::Vector2f entity_position;
+    float delta_time = 0;
+
     virtual ~Entity() = default;
     /// @brief virtual function that will be called when the entity collides. Play sounds, resolve collisions, etc.
     virtual void collided() = 0;
     /// @brief virtual function that will be called every frame. Used to update things like position, collisions, etc.
     virtual void update() = 0;
 
-    Draw_node node;
+    explicit Entity(Render_engine& given_r_engine, logger& given_log, const std::string& sprite_file = "-1")
+    {
+        log = &given_log;
 
-    logger* log = nullptr;
+        if (sprite_file == "-1")
+        {
+            log->log_error("Failed to load sprite, sprite_file is missing", std::to_string(node.ID));
+            return;
+        }
+        std::cout << sprite_file << '\n';
+        if (!node.texture.loadFromFile(sprite_file))
+        {
+            log->log_error("Failed to load sprite, loadFromFile() failed", std::to_string(node.ID));
+            return;
+        }
+        sf::Sprite the_sprite(node.texture);
+        the_sprite.setPosition(entity_position);
 
-    float x_;
-    float y_;
+        given_r_engine.add_object_to_reel(node);
 
-    float delta_time;
-
-    sf::Sprite sprite_;
-    sf::Texture texture;
-
+        node.sprite = std::move(the_sprite);
+    }
 };
-
-#endif //ENTITY_H
