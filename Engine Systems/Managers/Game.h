@@ -2,8 +2,7 @@
 // Created by chris on 7/4/26.
 //
 
-#ifndef GAME_H
-#define GAME_H
+#pragma once
 
 // The Owner of everything in the game. Override Game with your own game, and put it in /Game Objects
 class Game
@@ -17,4 +16,3 @@ public:
 
 };
 
-#endif //GAME_H

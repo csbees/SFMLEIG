@@ -10,13 +10,19 @@
 #include "logger.h"
 #include "Draw_node.h"
 
+struct Physics_node
+{
+    sf::Vector2f position;
+    sf::Vector2f velocity;
+};
+
 class Entity
 {
 public:
-    Draw_node node;
+    Draw_node node_draw  ;
+    Physics_node node_phy;
     logger* log = nullptr;
 
-    sf::Vector2f entity_position;
     float delta_time = 0;
 
     virtual ~Entity() = default;
@@ -31,20 +37,21 @@ public:
 
         if (sprite_file == "-1")
         {
-            log->log_error("Failed to load sprite, sprite_file is missing", std::to_string(node.ID));
+            log->log_error("Failed to load sprite, sprite_file is missing", std::to_string(node_draw.ID));
             return;
         }
         std::cout << sprite_file << '\n';
-        if (!node.texture.loadFromFile(sprite_file))
+        if (!node_draw.texture.loadFromFile(sprite_file))
         {
-            log->log_error("Failed to load sprite, loadFromFile() failed", std::to_string(node.ID));
+            log->log_error("Failed to load sprite, loadFromFile() failed", std::to_string(node_draw.ID));
             return;
         }
-        sf::Sprite the_sprite(node.texture);
-        the_sprite.setPosition(entity_position);
+        sf::Sprite the_sprite(node_draw.texture);
+        the_sprite.setPosition(node_phy.position);
 
-        given_r_engine.add_object_to_reel(node);
+        given_r_engine.add_object_to_reel(node_draw);
 
-        node.sprite = std::move(the_sprite);
+        node_draw.sprite = std::move(the_sprite);
     }
+
 };
