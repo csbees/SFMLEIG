@@ -9,10 +9,10 @@ void Render_engine::draw_objects(sf::RenderWindow& window) const
 {
     for (const auto& i : draw_reel)
     {
-        if (i.is_animated == false)
+        if (i->is_animated == false)
         {
-            window.draw(i.sprite);
-            break;
+            window.draw(i->sprite);
+            continue;
         }
 
         // animation code goes here
@@ -22,7 +22,7 @@ void Render_engine::draw_objects(sf::RenderWindow& window) const
 
 void Render_engine::add_object_to_reel(Draw_node& node)
 {
-    draw_reel.insert(draw_reel.begin(), node);
+    draw_reel.push_back(&node);
     node.ID = draw_reel.size() + 1;
 }
 

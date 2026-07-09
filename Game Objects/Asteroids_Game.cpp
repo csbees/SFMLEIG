@@ -4,6 +4,7 @@
 
 #include "Asteroids_Game.h"
 
+#include "Player.h"
 #include "SFML/Audio.hpp"
 #include "SFML/Graphics.hpp"
 
@@ -18,6 +19,9 @@ void Asteroids_Game::init()
 
 void Asteroids_Game::run_game()
 {
+    sf::Time delta_time = clock.restart();
+    float delta_time_seconds = delta_time.asSeconds();
+
     window.create(sf::VideoMode(WINDOW_SIZE),"Asteroids");
     while (window.isOpen())
     {

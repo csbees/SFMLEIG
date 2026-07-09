@@ -24,6 +24,7 @@ private:
     Render_engine r_engine;
     sf::RenderWindow window;
     Object_Manager obj_manager;
+    sf::Clock clock;
 
     const sf::Vector2u WINDOW_SIZE = sf::Vector2<int unsigned>(700,700);
 

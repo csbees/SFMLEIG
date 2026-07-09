@@ -14,5 +14,7 @@ struct Draw_node
     sf::Texture texture;
     sf::Sprite sprite;
     Draw_node() : sprite(texture) {}
+
+    std::string my_name = "unknown";
 };
 

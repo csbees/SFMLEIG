@@ -6,7 +6,12 @@
 
 void Player::update()
 {
+    node_phy.angle_radians = node_phy.angle_degrees * (3.14159265f / 180.f);
+
     calculate_movement();
+    node_phy.general_velocity *= 0.999999;
+    node_phy.position.x += std::cos(node_phy.angle_radians) * (node_phy.general_velocity); //* delta_time_seconds;
+    node_phy.position.y += std::sin(node_phy.angle_radians) * (node_phy.general_velocity); //* delta_time_seconds;
 }
 
 void Player::collided()
@@ -44,13 +49,22 @@ void Player::calculate_movement()
         switch (i)
         {
         case sf::Keyboard::Key::A:
-            std::cout << "A has been pressed\n";
+            {
+                node_phy.angle_degrees -= 1.1;
+                std::cout << "angle" << node_phy.angle_degrees << '\n';
+            }
             break;
         case sf::Keyboard::Key::D:
-            std::cout << "D has been pressed\n";
+            {
+                node_phy.angle_degrees += 1.1;
+                std::cout << "angle" << node_phy.angle_degrees << '\n';
+
+            }
             break;
         case sf::Keyboard::Key::W:
-            std::cout << "W has been pressed\n";
+            {
+                node_phy.general_velocity += 0.005;
+            }
             break;
         default:
             std::cout << "Another button was pressed\n";
