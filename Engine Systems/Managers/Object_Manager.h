@@ -9,8 +9,8 @@
 #include "../Entity.h"
 
 /* OBJECT OWNERSHIP AND RESPONSIBILITIES
- * Owns all Entities
- * Updates all Entities
+ * Owns all parent Entities
+ * Updates all parent Entities
  */
 class Object_Manager
 {

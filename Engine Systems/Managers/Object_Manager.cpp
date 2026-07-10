@@ -11,18 +11,17 @@ void Object_Manager::update_objects() const
 {
     for (auto& e : the_entities)
     {
-        std::cout << "position : " << e->node_phy.position.x << ' ' << e->node_phy.position.y << '\n'
-                  << "Rotation :"  << e->node_phy.angle_degrees << "\n"
-                  << "Velo     :"  << e->node_phy.general_velocity << "\n\n";
         e->node_draw.sprite.setRotation(sf::degrees(e->node_phy.angle_degrees));
         e->node_draw.sprite.setPosition(sf::Vector2f(e->node_phy.position));
         e->update();
     }
 }
 
+
 void Object_Manager::create_game_objects(Render_engine& r_engine, logger& log)
 {
     auto player = std::make_unique<Player>(r_engine, log,"/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Art/Plane.png");
+    // TODO: add this to the Entity constructor
     the_entities.push_back(std::move(player));
 }
 
