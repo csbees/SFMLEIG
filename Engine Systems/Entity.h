@@ -29,6 +29,7 @@ public:
 
     void self_screen_warp();
 
+    // TODO: Add and overload with Physics_node
     explicit Entity(Render_engine& given_r_engine, logger& given_log, const std::string& sprite_file = "-1"): log(given_log)
     {
         std::cout << "Entity Created\n";

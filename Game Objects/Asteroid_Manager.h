@@ -11,13 +11,17 @@
 
 class Asteroid_Manager
 {
-    explicit Asteroid_Manager(Render_engine& given_r_engine) : r_engine(given_r_engine) {}
+public:
+    explicit Asteroid_Manager(Render_engine& given_r_engine, logger& given_log) : r_engine(given_r_engine), log(given_log) {}
 
-
+    // Runs every frame; calls for asteroids to be created and gives a location
+    void place_asteroids();
+    void update();
+private:
     void create_asteroid(Physics_node node_phy);
-    Physics_node prep_new_asteroid_phy_node();
-
     Render_engine& r_engine;
+    logger& log;
+    int create_asteroid_timer = 0;
 
     std::vector<std::unique_ptr<Asteroid>> all_asteroids;
 };

@@ -38,9 +38,11 @@ void Asteroids_Game::run_game()
     }
 }
 
-void Asteroids_Game::update_objects() const
+void Asteroids_Game::update_objects()
 {
     obj_manager.update_objects();
+    aster_manager.place_asteroids();
+    aster_manager.update();
 }
 
 
