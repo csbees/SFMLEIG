@@ -17,13 +17,15 @@ public:
     // Runs every frame; calls for asteroids to be created and gives a location
     void place_asteroids();
     void update();
+    std::vector<std::unique_ptr<Asteroid>> all_asteroids;
 private:
     void create_asteroid(Physics_node node_phy);
+
     Render_engine& r_engine;
     logger& log;
     int create_asteroid_timer = 0;
 
-    std::vector<std::unique_ptr<Asteroid>> all_asteroids;
+
 };
 
 

@@ -22,7 +22,7 @@ void Player::update()
 
 void Player::collided()
 {
-
+    std::cout << "I hit something!\n";
 }
 
 std::vector<sf::Keyboard::Key> Player::check_for_input()

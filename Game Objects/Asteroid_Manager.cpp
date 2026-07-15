@@ -54,8 +54,6 @@ void Asteroid_Manager::place_asteroids()
         asteroid_phy_node.angle_degrees = (rand() % 90) + 110;
         asteroid_phy_node.general_velocity = 4;
     }
-    std::cout << "xy: " << asteroid_phy_node.position.x << '\n' << asteroid_phy_node.position.y << '\n'
-            << "deg: " <<asteroid_phy_node.angle_degrees << "\n\n";
     create_asteroid(asteroid_phy_node);
     create_asteroid_timer = 100;
 }

@@ -7,7 +7,7 @@
 #include "../../Game Objects/Player.h"
 
 
-void Object_Manager::update_objects() const
+void Object_Manager::update_objects(Player player, Asteroid_Manager asteroid_manager) const
 {
     for (auto& e : the_entities)
     {
@@ -15,6 +15,23 @@ void Object_Manager::update_objects() const
         e->node_draw.sprite.setPosition(sf::Vector2f(e->node_phy.position));
         e->update();
     }
+
+
+    for (const auto& i : the_entities)
+    {
+        sf::FloatRect other_box = i->node_draw.sprite.getGlobalBounds();
+        for (const auto& j : asteroid_manager.all_asteroids)
+        {
+            sf::FloatRect boundingBox = j->node_draw.sprite.getGlobalBounds();
+
+            if (boundingBox.findIntersection(other_box) and j->node_draw.ID != i->node_draw.ID)
+            {
+                i->collided();
+            }
+        }
+    }
+
+
 }
 
 

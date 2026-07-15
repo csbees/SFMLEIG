@@ -20,7 +20,6 @@ public:
     // Runs every frame,
     void run_game() override;
     void update_objects();
-
 private:
     logger log;
     Render_engine r_engine;

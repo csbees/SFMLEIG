@@ -7,6 +7,8 @@
 
 #include <vector>
 #include "../Entity.h"
+#include "../../Game Objects/Asteroid_Manager.h"
+#include "../../Game Objects/Player.h"
 
 /* OBJECT OWNERSHIP AND RESPONSIBILITIES
  * Owns all parent Entities
@@ -17,7 +19,7 @@ class Object_Manager
 public:
     void find_collision(const float d_time) const; // I'm not sure if I'm even going to have the obj manager do it
     // Iterates through all objects, and runs there update() function.
-    void update_objects() const;
+    void update_objects(Player player, Asteroid_Manager Aster) const;
     void create_game_objects(Render_engine& r_engine, logger& log);
 
     // Owns all Entities
