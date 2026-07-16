@@ -11,15 +11,70 @@ void Object_Manager::update_objects(float delta_time)
 {
     for (auto& e : all_entities)
     {
+        if (!e) continue;
+
         e->node_draw.sprite.setRotation(sf::degrees(e->node_phy.angle_degrees));
         e->node_draw.sprite.setPosition(sf::Vector2f(e->node_phy.position));
         e->update(delta_time);
+
+        if (e->label_dead)
+        {
+            e.reset();
+            break;
+        }
     }
 
+    check_collision();
+
+
+
+    if (!pending_entities.empty())
+    {
+        for (auto& i : pending_entities)
+        {
+            all_entities.push_back(std::move(i));
+        }
+        pending_entities.clear(); // just in case
+    }
 }
 
-void Object_Manager::check_collision()
+void Object_Manager::check_collision() const
 {
+    for (const auto& i : all_entities)
+    {
+        if (!i) continue;
+        for (const auto& j : all_entities)
+        {
+            if (!j) continue;
+            // CHECKS
+            if (i->node_draw.my_type == ASTEROID and
+                j->node_draw.my_type == ASTEROID)
+            {
+                continue;
+            }
+            if (i->node_draw.my_type == BULLET and
+               j->node_draw.my_type == BULLET)
+            {
+                continue;
+            }
+            if ((i->node_draw.my_type == BULLET and j->node_draw.my_type == PLAYER) or
+                (j->node_draw.my_type == BULLET and i->node_draw.my_type == PLAYER))
+            {
+                continue;
+            }
+
+            sf::FloatRect box = i->node_draw.sprite.getGlobalBounds();
+            sf::FloatRect other_box = j->node_draw.sprite.getGlobalBounds();
+
+            if (box.findIntersection(other_box) and j->node_draw.ID != i->node_draw.ID)
+            {
+                i->collided();
+                j->collided();
+            }
+        }
+    }
+
+
     // for (const auto& i : r_engine.draw_reel)
     // {
     //
@@ -63,40 +118,7 @@ void Object_Manager::check_collision()
     // }
 }
 
-
-
 void Object_Manager::create_objects_init(Render_engine& r_engine, logger& log)
 {
     create_object<Player>(r_engine, log, *this,"/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Art/Plane.png");
 }
-
-
-
-// Collision need to be rewritten anyway, so commented this out for now.
-// I think I want this to happen in update()
-// void Object_Manager::find_collision(const float d_time) const
-// {
-//     for (const auto e : all_entities)
-//     {
-//         e->node_draw_draw.sprite.setPosition(e->x_,e->y_);
-//         e->delta_time = d_time;
-//         e->update();
-//     }
-//
-//     // O(n^2) collision — this is very slow indeed, however, for pong, it works great!
-//     sf::FloatRect other_box;
-//     for (const auto& i : all_entities)
-//     {
-//         other_box = i->node_draw.sprite.getGlobalBounds();
-//         for (const auto& j : all_entities)
-//         {
-//             sf::FloatRect boundingBox = j->node_draw.sprite.getGlobalBounds();
-//
-//             if (boundingBox.intersects(other_box) and j->node_draw.ID != i->node_draw.ID)
-//             {
-//                 i->collided();
-//             }
-//         }
-//     }
-//
-// }

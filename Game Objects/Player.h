@@ -28,7 +28,7 @@ public:
            const std::string& sprite_file = "-1")
         : Entity(given_r_engine, given_log, sprite_file), r_engine(given_r_engine), obj_manager(given_obj_manager)
     {
-        node_draw.my_name = "Player";
+        node_draw.my_type = PLAYER;
     }
 
     bool dead_state = false;

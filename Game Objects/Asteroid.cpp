@@ -6,7 +6,9 @@
 
 void Asteroid::collided()
 {
-
+    node_draw.flag_dead = true;
+    label_dead = true;
+    // TODO: Make it so asteroids make more asteroids when it
 }
 
 void Asteroid::update(float delta_time)

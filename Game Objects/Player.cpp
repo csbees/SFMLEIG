@@ -26,7 +26,7 @@ void Player::update(float delta_time)
     }
     if (shoot_timer > 1)
     {
-        shoot_timer -= 1 * p_delta_time;
+        shoot_timer -= 10 * p_delta_time;
     }
 
     node_phy.angle_radians = node_phy.angle_degrees * (3.14159265f / 180.f);
@@ -121,6 +121,11 @@ void Player::shoot()
 {
     if (shoot_timer > 1) return;
     obj_manager.create_object<Bullet>(r_engine, log, node_phy ,"/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Art/Plane.png");
+    for (auto& e : obj_manager.all_entities)
+        std::cout << ": " << e << ' ';
+    std::cout << "size " << obj_manager.all_entities.size() << "\n";
     shoot_timer = 20;
+
+
 }
 

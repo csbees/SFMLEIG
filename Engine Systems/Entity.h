@@ -18,6 +18,7 @@ public:
     Physics_node node_phy;
     logger& log;
 
+    bool label_dead = false;
     bool disable_screen_wrap = false;
     float delta_time = 0; // Right now, this is useless
 

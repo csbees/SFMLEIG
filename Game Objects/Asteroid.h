@@ -5,6 +5,8 @@
 #pragma once
 #include "../Engine Systems/Entity.h"
 
+
+
 class Asteroid : public Entity
 {
 public:
@@ -19,7 +21,7 @@ public:
         node_phy.angle_degrees = asteroid_phy_node.angle_degrees;
         node_phy.general_velocity = asteroid_phy_node.general_velocity;
 
-        node_draw.my_name = "asteroid";
+        node_draw.my_type = ASTEROID;
     }
 
     void update(float) override;

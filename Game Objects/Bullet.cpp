@@ -5,7 +5,8 @@
 #include "Bullet.h"
 void Bullet::collided()
 {
-
+    node_draw.flag_dead = true;
+    label_dead = true;
 }
 
 void Bullet::update(float delta_time)

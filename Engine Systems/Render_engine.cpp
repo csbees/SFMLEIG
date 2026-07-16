@@ -12,9 +12,7 @@ void Render_engine::draw_objects(sf::RenderWindow& window)
     {
         if (draw_reel.at(i)->flag_dead)
         {
-            std::cout << "node: " << draw_reel.at(i)->ID << " is dead: " << draw_reel.at(i)->flag_dead << "\n";
             draw_reel.erase(draw_reel.begin() + i);
-            std::cout << "node: " << draw_reel.at(i)->ID << " is dead: " << draw_reel.at(i)->flag_dead << "\n";
             continue;
         }
         if (draw_reel.at(i)->sprite.getPosition().x > 800 or draw_reel.at(i)->sprite.getPosition().x < -50)

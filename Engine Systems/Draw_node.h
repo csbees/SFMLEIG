@@ -7,6 +7,16 @@
 
 #include "SFML/Graphics/Sprite.hpp"
 
+// I mean, this isn't really scalable, but bruh do you think I care
+// Maybe something like typeid(*i).name() or dynamic_cast would work
+enum OBJECT_TYPE
+{
+    PLAYER,
+    ASTEROID,
+    BULLET,
+    UNKNOWN
+};
+
 struct Draw_node
 {
     unsigned int ID = 0;
@@ -18,6 +28,6 @@ struct Draw_node
     bool flag_render_self = true;
     bool flag_dead        = false;
 
-    std::string my_name = "unknown";
+    OBJECT_TYPE my_type = UNKNOWN;
 };
 
