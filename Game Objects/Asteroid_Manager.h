@@ -7,23 +7,26 @@
 
 #include "Asteroid.h"
 #include "../Engine Systems/Physics_node.h"
+#include "../Engine Systems/Managers/Object_Manager.h"
 
 
 class Asteroid_Manager
 {
 public:
-    explicit Asteroid_Manager(Render_engine& given_r_engine, logger& given_log) : r_engine(given_r_engine), log(given_log) {}
+    Asteroid_Manager(Render_engine& given_r_engine, logger& given_log, Object_Manager& given_object_manager)
+        : r_engine(given_r_engine), log(given_log), obj_manager(given_object_manager) {}
 
     // Runs every frame; calls for asteroids to be created and gives a location
     void place_asteroids();
-    void update();
     std::vector<std::unique_ptr<Asteroid>> all_asteroids;
 private:
-    void create_asteroid(Physics_node node_phy);
+    void create_asteroid(const Physics_node& node_phy);
 
     Render_engine& r_engine;
     logger& log;
+    Object_Manager& obj_manager;
     int create_asteroid_timer = 0;
+
 
 
 };

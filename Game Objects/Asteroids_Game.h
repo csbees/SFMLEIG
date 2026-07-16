@@ -14,7 +14,8 @@
 class Asteroids_Game final : public Game
 {
 public:
-    Asteroids_Game() : aster_manager(r_engine,log) {}
+    Asteroids_Game()
+        : obj_manager(r_engine), aster_manager(r_engine,log,obj_manager) {}
     // Sets up essential systems
     void init() override;
     // Runs every frame,
@@ -29,6 +30,9 @@ private:
     sf::Clock clock;
 
     const sf::Vector2u WINDOW_SIZE = sf::Vector2<int unsigned>(700,700);
+
+    sf::Time delta_time = clock.restart();
+    float delta_time_seconds = delta_time.asSeconds();
 
 
 };

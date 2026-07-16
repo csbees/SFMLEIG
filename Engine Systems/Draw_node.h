@@ -10,10 +10,13 @@
 struct Draw_node
 {
     unsigned int ID = 0;
-    bool is_animated = false;
     sf::Texture texture;
     sf::Sprite sprite;
     Draw_node() : sprite(texture) {}
+
+    bool flag_is_animated = false;
+    bool flag_render_self = true;
+    bool flag_dead        = false;
 
     std::string my_name = "unknown";
 };

@@ -5,13 +5,25 @@
 #include "Render_engine.h"
 #include "Entity.h"
 
-void Render_engine::draw_objects(sf::RenderWindow& window) const
+void Render_engine::draw_objects(sf::RenderWindow& window)
 {
-    for (const auto& i : draw_reel)
+
+    for (int i = 0; i < draw_reel.size(); i++)
     {
-        if (i->is_animated == false)
+        if (draw_reel.at(i)->flag_dead)
         {
-            window.draw(i->sprite);
+            std::cout << "node: " << draw_reel.at(i)->ID << " is dead: " << draw_reel.at(i)->flag_dead << "\n";
+            draw_reel.erase(draw_reel.begin() + i);
+            std::cout << "node: " << draw_reel.at(i)->ID << " is dead: " << draw_reel.at(i)->flag_dead << "\n";
+            continue;
+        }
+        if (draw_reel.at(i)->sprite.getPosition().x > 800 or draw_reel.at(i)->sprite.getPosition().x < -50)
+            continue;
+        if (draw_reel.at(i)->sprite.getPosition().y > 800 or draw_reel.at(i)->sprite.getPosition().y < -50)
+            continue;
+        if (draw_reel.at(i)->flag_is_animated == false)
+        {
+            window.draw(draw_reel.at(i)->sprite);
             continue;
         }
 

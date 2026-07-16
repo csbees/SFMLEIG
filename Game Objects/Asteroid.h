@@ -17,9 +17,11 @@ public:
         node_phy.position.x = asteroid_phy_node.position.x;
         node_phy.position.y = asteroid_phy_node.position.y;
         node_phy.angle_degrees = asteroid_phy_node.angle_degrees;
-        node_phy.general_velocity = 1;
+        node_phy.general_velocity = asteroid_phy_node.general_velocity;
+
+        node_draw.my_name = "asteroid";
     }
 
-    void update() override;
+    void update(float) override;
     void collided() override;
 };

@@ -14,17 +14,17 @@ void Asteroids_Game::init()
     // ————— setup window ——————
     //window.setIcon() // TODO: Do this some time
     window.setFramerateLimit(60);
-    obj_manager.create_game_objects(r_engine,log);
+    obj_manager.create_objects_init(r_engine,log);
 }
 
 void Asteroids_Game::run_game()
 {
-    sf::Time delta_time = clock.restart();
-    float delta_time_seconds = delta_time.asSeconds();
-
     window.create(sf::VideoMode(WINDOW_SIZE),"Asteroids");
     while (window.isOpen())
     {
+        delta_time = clock.restart();
+        delta_time_seconds = delta_time.asSeconds();
+
         while (const std::optional event = window.pollEvent())
         {
             if (event->is<sf::Event::Closed>())
@@ -40,9 +40,8 @@ void Asteroids_Game::run_game()
 
 void Asteroids_Game::update_objects()
 {
-    obj_manager.update_objects(obj_manager.the_entities.at(1),obj_manager.);
+    obj_manager.update_objects(delta_time_seconds);
     aster_manager.place_asteroids();
-    aster_manager.update();
 }
 
 

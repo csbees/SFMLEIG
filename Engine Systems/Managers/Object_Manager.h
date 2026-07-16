@@ -7,23 +7,45 @@
 
 #include <vector>
 #include "../Entity.h"
-#include "../../Game Objects/Asteroid_Manager.h"
-#include "../../Game Objects/Player.h"
 
 /* OBJECT OWNERSHIP AND RESPONSIBILITIES
- * Owns all parent Entities
- * Updates all parent Entities
+ * Owns ALL Entities
+ * Updates ALL Entities
  */
 class Object_Manager
 {
 public:
-    void find_collision(const float d_time) const; // I'm not sure if I'm even going to have the obj manager do it
-    // Iterates through all objects, and runs there update() function.
-    void update_objects(Player player, Asteroid_Manager Aster) const;
-    void create_game_objects(Render_engine& r_engine, logger& log);
+    explicit Object_Manager(Render_engine& given_r_engine)
+        : r_engine(given_r_engine) {}
 
+    void update_objects(float delta_time);
+    void check_collision();
+    void create_objects_init(Render_engine& r_engine, logger& log);
+
+    template <typename T>
+    inline void create_object(Render_engine& given_r_engine, logger& log,  const std::string& sprite_file)
+    {
+        auto new_obj = std::make_unique<T>(given_r_engine, log, sprite_file);
+        all_entities.push_back(std::move(new_obj));
+    }
+    template <typename T>
+    inline void create_object(Render_engine& given_r_engine, logger& log, Physics_node phy_node, const std::string& sprite_file)
+    {
+        auto new_obj = std::make_unique<T>(given_r_engine, log, phy_node, sprite_file);
+        all_entities.push_back(std::move(new_obj));
+    }
+    template <typename T>
+    inline void create_object(Render_engine& given_r_engine, logger& log, Object_Manager& given_obj_manager, const std::string& sprite_file)
+    {
+        auto new_obj = std::make_unique<T>(given_r_engine, log, given_obj_manager, sprite_file);
+        all_entities.push_back(std::move(new_obj));
+    }
+private:
     // Owns all Entities
-    std::vector<std::unique_ptr<Entity>> the_entities;
+    std::vector<std::unique_ptr <Entity>> all_entities;
+    Render_engine& r_engine;
+
+    bool player_died = false;
 };
 
 

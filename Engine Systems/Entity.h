@@ -19,13 +19,13 @@ public:
     logger& log;
 
     bool disable_screen_wrap = false;
-    float delta_time = 0;
+    float delta_time = 0; // Right now, this is useless
 
     virtual ~Entity() = default;
     /// @brief virtual function that will be called when the entity collides. Play sounds, resolve collisions, etc.
     virtual void collided() = 0;
     /// @brief virtual function that will be called every frame. Used to update things like position, collisions, etc.
-    virtual void update() = 0;
+    virtual void update(float delta_time) = 0;
 
     void self_screen_warp();
 

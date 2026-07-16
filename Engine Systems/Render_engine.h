@@ -14,11 +14,9 @@ class Entity;
 class Render_engine
 {
 public:
-    void draw_objects(sf::RenderWindow& window) const;
+    void draw_objects(sf::RenderWindow& window);
 
     void add_object_to_reel(Draw_node& node);
-
-private:
 
     // Contains all the Draw_nodes that will be drawn this frame
     // Draws from back to front, meaning the first thing added will the be first thing drawn

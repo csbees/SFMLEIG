@@ -8,7 +8,7 @@
 class Bullet final : public Entity
 {
 public:
-    void update() override;
+    void update(float) override;
     void collided() override;
 
 
@@ -23,6 +23,8 @@ public:
         node_phy.angle_radians = players_phy_node.angle_radians;
 
         node_phy.general_velocity = BULLET_SPEED + players_phy_node.general_velocity;
+
+        node_draw.my_name = "bullet";
 
         disable_screen_wrap = true; // maybe? though I may want to turn it back on
     }
