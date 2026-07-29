@@ -3,27 +3,18 @@
 //
 
 #include "Player.h"
+#include <math.h>
 
 void Player::update(float delta_time)
 {
     p_delta_time = delta_time;
 
-    // TODO: UPDATE this with collided()
-    // if (node_draw.hit_something == true)
-    // {
-    //     got_hit();
-    //     node_draw.hit_something = false;
-    // }
-    if (dead_state == true)
+    if (lives < 1)
     {
-        if (death_timer < 1)
-        {
-            dead_state = false;
-            node_draw.flag_render_self = true;
-        }
-        else death_timer--;
+        player_loses();
         return;
     }
+
     if (shoot_timer > 1)
     {
         shoot_timer -= 10 * p_delta_time;
@@ -36,11 +27,25 @@ void Player::update(float delta_time)
     node_phy.position.x += std::cos(node_phy.angle_radians) * (node_phy.general_velocity) * p_delta_time;
     node_phy.position.y += std::sin(node_phy.angle_radians) * (node_phy.general_velocity) * p_delta_time;
 
+    if (i_frames > 0) { i_frames--; }
+    int iblink_frames = static_cast<int>(blink_frames);
+    if ((iblink_frames % 2) == 1)
+    {
+        node_draw.flag_render_self = false;
+        std::cout << "don't render\n";
+    } else node_draw.flag_render_self = true;
+    if (blink_frames > 0)
+    {
+        blink_frames -= 0.01;
+        /*std::cout << blink_frames << '\n'
+                  << "result of % " << (iblink_frames % 2) << "\n";*/
+
+    }
+
 }
 
 void Player::got_hit()
 {
-    lives--;
     if (lives < 1)
     {
         // I'll send the players back to the menu;
@@ -56,8 +61,20 @@ void Player::got_hit()
 
 void Player::collided()
 {
+    if (i_frames > 0) { return; }
     std::cout << "I hit something!\n";
+    blink_frames = 5.0f;
+    i_frames = I_FRAMES_AMOUNT;
+    lives--;
+
 }
+
+void Player::player_loses()
+{
+    std::cout << "Lol you lose.\n";
+    node_draw.flag_render_self = false;
+}
+
 
 std::vector<sf::Keyboard::Key> Player::check_for_input()
 {

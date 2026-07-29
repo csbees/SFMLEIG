@@ -47,6 +47,13 @@ void Object_Manager::check_collision() const
         {
             if (!j) continue;
             // CHECKS
+            // TODO: This doesn't work, add a flag for god mode or something
+            if (i->node_draw.ID == j->node_draw.ID) continue;
+            if (i->node_draw.flag_render_self == false or
+                j->node_draw.flag_render_self == false)
+            {
+                continue;
+            }
             if (i->node_draw.my_type == ASTEROID and
                 j->node_draw.my_type == ASTEROID)
             {

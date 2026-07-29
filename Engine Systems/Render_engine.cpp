@@ -15,6 +15,7 @@ void Render_engine::draw_objects(sf::RenderWindow& window)
             draw_reel.erase(draw_reel.begin() + i);
             continue;
         }
+        if (draw_reel.at(i)->flag_render_self == false) continue;
         if (draw_reel.at(i)->sprite.getPosition().x > 800 or draw_reel.at(i)->sprite.getPosition().x < -50)
             continue;
         if (draw_reel.at(i)->sprite.getPosition().y > 800 or draw_reel.at(i)->sprite.getPosition().y < -50)

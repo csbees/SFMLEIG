@@ -19,6 +19,7 @@ public:
     void shoot();
     void got_hit();
     void destroy_bullets();
+    void player_loses();
 
     using Entity::Entity;
 
@@ -41,6 +42,10 @@ private:
     Object_Manager& obj_manager;
     int death_timer = 0;
     float p_delta_time = 0;
+
+    int i_frames = 0;
+    const int I_FRAMES_AMOUNT = 100;
+    float blink_frames = 0;
 
     const float SPEED_TURNING = 100;
     const float SPEED_MOVE    = 1;
