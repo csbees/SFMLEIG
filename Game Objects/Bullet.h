@@ -30,5 +30,5 @@ public:
     }
 
 private:
-    const float BULLET_SPEED = 2;
+    const float BULLET_SPEED = 200;
 };

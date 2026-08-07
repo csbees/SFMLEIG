@@ -15,7 +15,7 @@ class Asteroids_Game final : public Game
 {
 public:
     Asteroids_Game()
-        : obj_manager(r_engine), aster_manager(r_engine,log,obj_manager) {}
+        : obj_manager(r_engine), aster_manager(r_engine,log, obj_manager) {}
     // Sets up essential systems
     void init() override;
     // Runs every frame,

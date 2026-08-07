@@ -81,48 +81,6 @@ void Object_Manager::check_collision() const
         }
     }
 
-
-    // for (const auto& i : r_engine.draw_reel)
-    // {
-    //
-    //     sf::FloatRect other_box = i->sprite.getGlobalBounds();
-    //     for (const auto& j : r_engine.draw_reel)
-    //     {
-    //         if ((i->my_name == "Player" or j->my_name == "Player") and
-    //             (i->flag_render_self == false or j->flag_render_self == false))
-    //         {
-    //             continue;
-    //         }
-    //
-    //
-    //
-    //         sf::FloatRect boundingBox = j->sprite.getGlobalBounds();
-    //
-    //         if (i->my_name == "asteroid" and j->my_name == "asteroid")
-    //             continue;
-    //         if (i->my_name == "bullet" and j->my_name == "bullet")
-    //             continue;
-    //         if ((i->my_name == "bullet" and j->my_name == "Player") or (i->my_name == "Player" and j->my_name == "bullet"))
-    //             continue;
-    //
-    //         if (boundingBox.findIntersection(other_box) and j->ID != i->ID)
-    //         {
-    //             if ((i->my_name == "Player" and j->my_name == "asteroid") or (i->my_name == "asteroid" and j->my_name == "Player"))
-    //             {
-    //                 std::cout << "player hit asteroid\n";
-    //                 i->hit_something = true;
-    //                 j->hit_something = true;
-    //             }
-    //
-    //             else if ((i->my_name == "bullet" and j->my_name == "asteroid") or (i->my_name == "asteroid" and j->my_name == "bullet"))
-    //             {
-    //                 std::cout << "bullet hit asteroid\n";
-    //                 i->hit_something = true;
-    //                 j->hit_something = true;
-    //             }
-    //         }
-    //     }
-    // }
 }
 
 void Object_Manager::create_objects_init(Render_engine& r_engine, logger& log)

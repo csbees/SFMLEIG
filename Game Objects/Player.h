@@ -18,7 +18,6 @@ public:
     void calculate_movement();
     void shoot();
     void got_hit();
-    void destroy_bullets();
     void player_loses();
 
     using Entity::Entity;
