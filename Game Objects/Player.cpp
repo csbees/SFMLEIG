@@ -3,11 +3,13 @@
 //
 
 #include "Player.h"
-#include <math.h>
+#include <cmath>
 
 void Player::update(float delta_time)
 {
     p_delta_time = delta_time;
+    const auto corrected_player_angle = (node_draw.sprite.getRotation() + sf::degrees(90));
+    node_draw.sprite.setRotation(corrected_player_angle);
 
     if (lives < 1)
     {
@@ -20,12 +22,27 @@ void Player::update(float delta_time)
         shoot_timer -= 10 * p_delta_time;
     }
 
-    node_phy.angle_radians = node_phy.angle_degrees * (3.14159265f / 180.f);
-
     calculate_movement();
-    node_phy.general_velocity *= 0.9999;
-    node_phy.position.x += std::cos(node_phy.angle_radians) * (node_phy.general_velocity) * p_delta_time;
-    node_phy.position.y += std::sin(node_phy.angle_radians) * (node_phy.general_velocity) * p_delta_time;
+    node_phy.angle_radians = node_phy.angle_degrees * (3.14159265f / 180.f);
+    if (last_recorded_direction != node_phy.angle_degrees and new_movement_recorded == true)
+    {
+        currently_moving_direction = (last_recorded_direction + node_phy.angle_radians)/2;
+
+    }
+    velocity_x *= 0.999;
+    velocity_y *= 0.999;
+
+    node_phy.position.x += velocity_x * p_delta_time;
+    node_phy.position.y += velocity_y * p_delta_time;
+
+    node_phy.general_velocity = sqrt((pow(velocity_x, 2) + pow(velocity_y, 2), 2));
+    std::cout << "node_phy.general_velocity = " << node_phy.general_velocity << "\n\n";
+
+    last_recorded_direction = currently_moving_direction;
+    if (last_recorded_direction == node_phy.angle_radians )
+    {
+        new_movement_recorded = false;
+    }
 
     if (i_frames > 0) { i_frames--; }
     int iblink_frames = static_cast<int>(blink_frames);
@@ -66,7 +83,6 @@ void Player::collided()
     blink_frames = 5.0f;
     i_frames = I_FRAMES_AMOUNT;
     lives--;
-
 }
 
 void Player::player_loses()
@@ -120,7 +136,10 @@ void Player::calculate_movement()
             break;
         case sf::Keyboard::Key::W:
             {
-                node_phy.general_velocity += SPEED_MOVE;
+                velocity_x += std::cos(currently_moving_direction) * SPEED_MOVE * p_delta_time;
+                velocity_y += std::sin(currently_moving_direction) * SPEED_MOVE * p_delta_time;
+
+                new_movement_recorded = true;
             }
             break;
         case sf::Keyboard::Key::Space:

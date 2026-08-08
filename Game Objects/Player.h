@@ -29,6 +29,8 @@ public:
         : Entity(given_r_engine, given_log, sprite_file), r_engine(given_r_engine), obj_manager(given_obj_manager)
     {
         node_draw.my_type = PLAYER;
+        node_draw.sprite.setScale(sf::Vector2f(.1,0.1));
+        node_draw.sprite.setOrigin(sf::Vector2f(250,250));
     }
 
     bool dead_state = false;
@@ -42,12 +44,19 @@ private:
     int death_timer = 0;
     float p_delta_time = 0;
 
+    float last_recorded_direction = 0;
+    bool new_movement_recorded = false;
+    float currently_moving_direction = 0;
+    float new_velocity = 0;
+
     int i_frames = 0;
     const int I_FRAMES_AMOUNT = 100;
     float blink_frames = 0;
 
-    const float SPEED_TURNING = 100;
-    const float SPEED_MOVE    = 1;
+    const float SPEED_TURNING = 300;
+    const float SPEED_MOVE    = 400;
+    float velocity_x = 0;
+    float velocity_y = 0;
     int lives = 3;
 };
 
