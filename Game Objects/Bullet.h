@@ -11,7 +11,6 @@ public:
     void update(float) override;
     void collided() override;
 
-
     Bullet(Render_engine& given_r_engine,
            logger& given_log,
            const Physics_node& players_phy_node,
@@ -30,5 +29,5 @@ public:
     }
 
 private:
-    const float BULLET_SPEED = 200;
+    const float BULLET_SPEED = 1000;
 };

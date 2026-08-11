@@ -27,7 +27,6 @@ void Player::update(float delta_time)
     if (last_recorded_direction != node_phy.angle_degrees and new_movement_recorded == true)
     {
         currently_moving_direction = (last_recorded_direction + node_phy.angle_radians)/2;
-
     }
     velocity_x *= 0.999;
     velocity_y *= 0.999;
@@ -35,8 +34,7 @@ void Player::update(float delta_time)
     node_phy.position.x += velocity_x * p_delta_time;
     node_phy.position.y += velocity_y * p_delta_time;
 
-    node_phy.general_velocity = sqrt((pow(velocity_x, 2) + pow(velocity_y, 2), 2));
-    std::cout << "node_phy.general_velocity = " << node_phy.general_velocity << "\n\n";
+    node_phy.general_velocity = abs(velocity_x) + abs(velocity_y);
 
     last_recorded_direction = currently_moving_direction;
     if (last_recorded_direction == node_phy.angle_radians )
@@ -83,12 +81,20 @@ void Player::collided()
     blink_frames = 5.0f;
     i_frames = I_FRAMES_AMOUNT;
     lives--;
+    sound_hit.play();
 }
 
 void Player::player_loses()
 {
-    std::cout << "Lol you lose.\n";
-    node_draw.flag_render_self = false;
+    if (node_draw.flag_render_self)
+    {
+        sound_die.play();
+        sound_die.play();
+        sound_die.play();
+        node_draw.flag_render_self = false;
+    }
+
+    // TODO: send player back to menu
 }
 
 
@@ -157,8 +163,8 @@ void Player::shoot()
 {
     if (shoot_timer > 1) return;
     obj_manager.create_object<Bullet>(r_engine, log, node_phy ,"/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Art/Plane.png");
-    shoot_timer = 5;
-
+    shoot_timer = 2.5;
+    sound_shoot.play();
 
 }
 

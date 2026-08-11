@@ -17,7 +17,7 @@ void Asteroid_Manager::place_asteroids()
     auto pos_r =  std::uniform_real_distribution<float>(0, 500)(rng);
     auto degrees_r = std::uniform_real_distribution<float>(0, 90)(rng);
 
-    asteroid_phy_node.general_velocity =  std::uniform_real_distribution<float>(40, 200)(rng);
+    asteroid_phy_node.general_velocity =  std::uniform_real_distribution<float>(100, 300)(rng);
 
     // TODO: When I add different resolutions, fix this
     if (which_side == 1)
@@ -46,5 +46,5 @@ void Asteroid_Manager::place_asteroids()
         asteroid_phy_node.angle_degrees = degrees_r + 110;
     }
     create_asteroid(asteroid_phy_node);
-    create_asteroid_timer = 2000;
+    create_asteroid_timer = 200;
 }
