@@ -11,7 +11,30 @@ FetchContent_Declare(SFML
         GIT_SHALLOW ON
         EXCLUDE_FROM_ALL
         SYSTEM)
+FetchContent_Declare(
+        imgui
+        GIT_REPOSITORY https://github.com/ocornut/imgui
+        GIT_TAG 35b1148efb839381b84de9290d9caf0b66ad7d03
+)
+
 FetchContent_MakeAvailable(SFML)
+FetchContent_MakeAvailable(imgui)
+
+FetchContent_Declare(
+        imgui-sfml
+        GIT_REPOSITORY https://github.com/SFML/imgui-sfml
+        GIT_TAG 82dc2033e51b8323857c3ae1cf1f458b3a933c35
+)
+add_subdirectory(imgui-sfml)
+
+message(STATUS "Fetching ImGui-SFML...")
+
+set(IMGUI_DIR ${imgui_SOURCE_DIR})
+set(IMGUI_SFML_FIND_SFML OFF)
+set(IMGUI_SFML_IMGUI_DEMO OFF)
+
+FetchContent_MakeAvailable(imgui-sfml)
+
 
 add_executable(
         ${CMAKE_PROJECT_NAME}
@@ -29,11 +52,30 @@ add_executable(
         "Engine Systems/Managers/Menu_Manager.h"
         "Engine Systems/Managers/Object_Manager.cpp"
         "Engine Systems/Managers/Object_Manager.h"
+        "Game Objects/Asteroids_Game.cpp"
+        "Game Objects/Asteroids_Game.h"
+        "Engine Systems/Managers/Music_Manager.cpp"
+        "Engine Systems/Managers/Music_Manager.h"
+        "Game Objects/Player.cpp"
+        "Game Objects/Player.h"
+        "Game Objects/Asteroid.cpp"
+        "Game Objects/Asteroid.h"
+        "Game Objects/Bullet.cpp"
+        "Game Objects/Bullet.h"
+        "Game Objects/Asteroid_Manager.cpp"
+        "Game Objects/Asteroid_Manager.h"
+        "Engine Systems/Physics_node.h"
+        "Engine Systems/Physics_node.h"
+        "Engine Systems/sound_container.h"
 
 )
 
 target_compile_features(${CMAKE_PROJECT_NAME} PRIVATE cxx_std_17)
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE SFML::Graphics)
+target_link_libraries(${CMAKE_PROJECT_NAME}
+        PRIVATE
+            SFML::Graphics
+            SFML::Audio
+)
 
 
 
