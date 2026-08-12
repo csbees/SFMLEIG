@@ -8,6 +8,8 @@
 #include "SFML/Audio.hpp"
 #include "SFML/Graphics.hpp"
 
+#include <imgui-SFML.h>
+#include <imgui.h>
 
 void Asteroids_Game::init()
 {
@@ -20,6 +22,8 @@ void Asteroids_Game::init()
 void Asteroids_Game::run_game()
 {
     window.create(sf::VideoMode(WINDOW_SIZE),"Asteroids");
+    ImGui::SFML::Init(window);
+
     while (window.isOpen())
     {
         delta_time = clock.restart();
@@ -27,15 +31,26 @@ void Asteroids_Game::run_game()
 
         while (const std::optional event = window.pollEvent())
         {
+            ImGui::SFML::ProcessEvent(window, *event);
+
             if (event->is<sf::Event::Closed>())
                 window.close();
         }
 
+        ImGui::SFML::Update(window, clock.restart());
+
+        ImGui::Begin("Hello, world!");
+        ImGui::Button("Look at this pretty button");
+        ImGui::End();
+
         window.clear();
         update_objects();
         r_engine.draw_objects(window);
+        ImGui::SFML::Render(window);
         window.display();
     }
+
+    ImGui::SFML::Shutdown();
 }
 
 void Asteroids_Game::update_objects()
