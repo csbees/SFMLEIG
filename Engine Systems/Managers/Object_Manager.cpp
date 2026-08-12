@@ -17,6 +17,13 @@ void Object_Manager::update_objects(float delta_time)
         e->node_draw.sprite.setPosition(sf::Vector2f(e->node_phy.position));
         e->update(delta_time);
 
+        if (e->node_draw.my_type == OBJECT_TYPE::PLAYER and
+                   e->label_dead == true)
+        {
+            player_is_dead = true;
+            return;
+        }
+
         if (e->label_dead)
         {
             e.reset();
@@ -36,6 +43,12 @@ void Object_Manager::update_objects(float delta_time)
     }
 }
 
+void Object_Manager::reset_game()
+{
+    all_entities.clear();
+}
+
+
 void Object_Manager::check_collision() const
 {
     for (const auto& i : all_entities)
@@ -46,6 +59,7 @@ void Object_Manager::check_collision() const
             if (!j) continue;
             // CHECKS
             // TODO: This doesn't work, add a flag for god mode or something
+            // Wait, this doesn't work? WHY? ITS BEEN WORKING THOUGH
             if (i->node_draw.ID == j->node_draw.ID) continue;
             if (i->node_draw.flag_render_self == false or
                 j->node_draw.flag_render_self == false)

@@ -15,13 +15,13 @@ void Asteroids_Game::init()
 {
     // ————— setup window ——————
     //window.setIcon() // TODO: Do this some time
-    window.setFramerateLimit(60);
     obj_manager.create_objects_init(r_engine,log);
 }
 
 void Asteroids_Game::run_game()
 {
     window.create(sf::VideoMode(WINDOW_SIZE),"Asteroids");
+    window.setFramerateLimit(60);
     ImGui::SFML::Init(window);
 
     while (window.isOpen())
@@ -40,11 +40,23 @@ void Asteroids_Game::run_game()
         ImGui::SFML::Update(window, clock.restart());
 
         ImGui::Begin("Hello, world!");
-        ImGui::Button("Look at this pretty button");
+
+        //if (obj_manager.player_is_dead == true)
+       // {
+            if (ImGui::Button("Play Again?"))
+            {
+                obj_manager.reset_game();
+                r_engine.reset_game();
+                init();
+                obj_manager.player_is_dead = false;
+            }
+        //}
+
         ImGui::End();
 
         window.clear();
-        update_objects();
+        if (obj_manager.player_is_dead == false)
+            update_objects();
         r_engine.draw_objects(window);
         ImGui::SFML::Render(window);
         window.display();

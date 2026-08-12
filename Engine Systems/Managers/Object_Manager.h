@@ -25,6 +25,7 @@ public:
     void update_objects(float delta_time);
     void check_collision() const;
     void create_objects_init(Render_engine& r_engine, logger& log);
+    void reset_game();
 
     template <typename T>
     inline void create_object(Render_engine& given_r_engine, logger& log,  const std::string& sprite_file)
@@ -48,7 +49,9 @@ public:
             std::make_unique<T>(given_r_engine, log, phy_node, sprite_file, given_asteroid_manager, asteroid_type)));
     }
 
-//private:
+    bool player_is_dead = false;
+
+private:
     // Owns all Entities
     std::vector<std::unique_ptr <Entity>> all_entities;
     // All entities going to be created.

@@ -52,9 +52,8 @@ void Player::update(float delta_time)
     if (blink_frames > 0)
     {
         blink_frames -= 0.01;
-        /*std::cout << blink_frames << '\n'
-                  << "result of % " << (iblink_frames % 2) << "\n";*/
-
+        std::cout << blink_frames << '\n'
+                  << "result of % " << (iblink_frames % 2) << "\n";
     }
 
 }
@@ -89,14 +88,11 @@ void Player::player_loses()
     if (node_draw.flag_render_self)
     {
         sound_die.play();
-        sound_die.play();
-        sound_die.play();
-        node_draw.flag_render_self = false;
     }
+    node_draw.flag_render_self = false;
+    label_dead = true;
 
-    // TODO: send player back to menu
 }
-
 
 std::vector<sf::Keyboard::Key> Player::check_for_input()
 {

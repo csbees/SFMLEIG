@@ -37,6 +37,12 @@ void Render_engine::add_object_to_reel(Draw_node& node)
     node.ID = draw_reel.size() + 1;
 }
 
+void Render_engine::reset_game()
+{
+    draw_reel.clear();
+}
+
+
 
 
 
