@@ -31,6 +31,39 @@ void Player::update(float delta_time)
     velocity_x *= 0.999;
     velocity_y *= 0.999;
 
+    if  (
+        (node_phy.position.x > 700) or
+        (node_phy.position.x < 0)
+        )
+    {
+        velocity_x *= -1;
+        velocity_x /= 4;
+    }
+    if  (
+        (node_phy.position.y > 700) or
+        (node_phy.position.y < 0)
+        )
+    {
+        velocity_y *= -1;
+        velocity_y /= 4;
+    }
+    while (node_phy.position.x > 700)
+    {
+        node_phy.position.x -= 1;
+    }
+    while (node_phy.position.x < 0)
+    {
+        node_phy.position.x += 1;
+    }
+    while (node_phy.position.y > 700)
+    {
+        node_phy.position.y -= 1;
+    }
+    while (node_phy.position.y < 0)
+    {
+        node_phy.position.y += 1;
+    }
+
     node_phy.position.x += velocity_x * p_delta_time;
     node_phy.position.y += velocity_y * p_delta_time;
 
@@ -51,26 +84,11 @@ void Player::update(float delta_time)
     } else node_draw.flag_render_self = true;
     if (blink_frames > 0)
     {
-        blink_frames -= 0.01;
+        blink_frames -= 0.1;
         std::cout << blink_frames << '\n'
                   << "result of % " << (iblink_frames % 2) << "\n";
     }
 
-}
-
-void Player::got_hit()
-{
-    if (lives < 1)
-    {
-        // I'll send the players back to the menu;
-        return;
-    }
-    // otherwise, all bullets will be destroyed, the player will play a explosion animation of some kind (fake animation)
-    // they will be invincible for a few seconds -> Tped to spawn, invincibility over.
-    std::cout << "The player has been hit\n";
-    // death_timer = 500;
-    // node_draw.flag_render_self = false;
-    // dead_state = true;
 }
 
 void Player::collided()
@@ -91,7 +109,6 @@ void Player::player_loses()
     }
     node_draw.flag_render_self = false;
     label_dead = true;
-
 }
 
 std::vector<sf::Keyboard::Key> Player::check_for_input()

@@ -34,6 +34,7 @@ private:
     Object_Manager& obj_manager;
     int create_asteroid_timer = 0;
 
+    float CREATE_ASTER_TIME = 100;
 };
 
 inline void Asteroid_Manager::create_asteroid(const Physics_node& node_phy)

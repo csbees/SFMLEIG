@@ -46,5 +46,6 @@ void Asteroid_Manager::place_asteroids()
         asteroid_phy_node.angle_degrees = degrees_r + 110;
     }
     create_asteroid(asteroid_phy_node);
-    create_asteroid_timer = 200;
+    CREATE_ASTER_TIME -= 0.5;
+    create_asteroid_timer = CREATE_ASTER_TIME;
 }

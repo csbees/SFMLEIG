@@ -39,18 +39,32 @@ void Asteroids_Game::run_game()
 
         ImGui::SFML::Update(window, clock.restart());
 
-        ImGui::Begin("Hello, world!");
+        ImGuiWindowFlags button_rest_flags =
+            ImGuiWindowFlags_NoDecoration |
+            ImGuiWindowFlags_NoMove |
+            ImGuiWindowFlags_NoBackground |
+            ImGuiWindowFlags_NoSavedSettings |
+            ImGuiWindowFlags_AlwaysAutoResize;
 
-        //if (obj_manager.player_is_dead == true)
-       // {
-            if (ImGui::Button("Play Again?"))
+
+        ImGui::SetNextWindowPos(
+            ImVec2(WINDOW_SIZE.x / 2.0f, WINDOW_SIZE.y / 2.0f),
+            ImGuiCond_Always,
+            ImVec2(0.5f, 0.5f)
+        );
+
+        ImGui::Begin("-", nullptr, button_rest_flags);
+
+        if (obj_manager.player_is_dead == true)
+        {
+            if (ImGui::Button("Play Again?", ImVec2(100.0f,50.0f)))
             {
                 obj_manager.reset_game();
                 r_engine.reset_game();
                 init();
                 obj_manager.player_is_dead = false;
             }
-        //}
+        }
 
         ImGui::End();
 

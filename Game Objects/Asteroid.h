@@ -25,6 +25,8 @@ public:
         node_phy.angle_degrees = asteroid_phy_node.angle_degrees;
         node_phy.general_velocity = asteroid_phy_node.general_velocity;
 
+        node_draw.sprite.setPosition(sf::Vector2f(node_phy.position));
+
         node_draw.my_type = ASTEROID;
         float scale_factor = rand() % 3;
         node_draw.sprite.setScale({scale_factor,scale_factor});

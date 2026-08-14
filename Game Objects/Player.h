@@ -36,6 +36,8 @@ public:
         node_draw.my_type = PLAYER;
         node_draw.sprite.setScale(sf::Vector2f(.1,0.1));
         node_draw.sprite.setOrigin(sf::Vector2f(250,250));
+        node_phy.position.x = 350;
+        node_phy.position.y = 350;
 
     }
 

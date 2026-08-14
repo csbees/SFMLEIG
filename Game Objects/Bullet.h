@@ -23,6 +23,8 @@ public:
 
         node_phy.general_velocity = BULLET_SPEED + players_phy_node.general_velocity;
 
+        node_draw.sprite.setPosition(sf::Vector2f(node_phy.position));
+
         node_draw.my_type = BULLET;
 
         disable_screen_wrap = true; // maybe? though I may want to turn it back on
