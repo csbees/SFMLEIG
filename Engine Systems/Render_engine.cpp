@@ -12,6 +12,10 @@ void Render_engine::draw_objects(sf::RenderWindow& window)
     {
         if (draw_reel.at(i)->flag_dead)
         {
+            if (draw_reel.at(i)->my_type == OBJECT_TYPE::ASTEROID)
+            {
+                score_personal += (100.0f * draw_reel.at(i)->sprite.getScale().x);
+            }
             draw_reel.erase(draw_reel.begin() + i);
             continue;
         }

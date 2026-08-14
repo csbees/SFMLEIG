@@ -37,11 +37,16 @@ public:
         node_draw.sprite.setScale(sf::Vector2f(.1,0.1));
         node_draw.sprite.setOrigin(sf::Vector2f(250,250));
         node_phy.position.x = 350;
-        node_phy.position.y = 350;
+        node_phy.position.y = 450;
 
+        node_draw.sprite.setPosition({node_phy.position.x, node_phy.position.y});
+        const auto corrected_player_angle = (node_draw.sprite.getRotation() + sf::degrees(90));
+        node_draw.sprite.setRotation(corrected_player_angle);
     }
 
     bool dead_state = false;
+
+    int i_frames = 0;
 
 private:
 
@@ -61,7 +66,6 @@ private:
     float currently_moving_direction = 0;
     float new_velocity = 0;
 
-    int i_frames = 0;
     const int I_FRAMES_AMOUNT = 100;
     float blink_frames = 0;
 

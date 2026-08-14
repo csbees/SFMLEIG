@@ -25,5 +25,7 @@ public:
     // Use std::vector::insert to add to the front
     std::vector<Draw_node*> draw_reel;
 
+    float score_personal = 0;
+
 
 };

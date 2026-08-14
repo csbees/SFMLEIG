@@ -82,6 +82,17 @@ void Object_Manager::check_collision() const
                 continue;
             }
 
+            if (i->node_draw.my_type == PLAYER)
+            {
+                auto& i_player = dynamic_cast<Player&>(*i);
+                if ((i_player.i_frames > 0)) continue;
+            }
+            if (j->node_draw.my_type == PLAYER)
+            {
+                auto& j_player = dynamic_cast<Player&>(*j);
+                if ((j_player.i_frames > 0)) continue;
+            }
+
             sf::FloatRect box = i->node_draw.sprite.getGlobalBounds();
             sf::FloatRect other_box = j->node_draw.sprite.getGlobalBounds();
 

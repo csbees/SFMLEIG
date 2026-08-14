@@ -94,8 +94,7 @@ void Player::update(float delta_time)
 void Player::collided()
 {
     if (i_frames > 0) { return; }
-    std::cout << "I hit something!\n";
-    blink_frames = 5.0f;
+    blink_frames = 10.0f;
     i_frames = I_FRAMES_AMOUNT;
     lives--;
     sound_hit.play();
