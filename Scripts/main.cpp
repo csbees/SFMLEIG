@@ -4,6 +4,5 @@
 int main()
 {
     Asteroids_Game game;
-    game.init();
     game.run_game();
 }

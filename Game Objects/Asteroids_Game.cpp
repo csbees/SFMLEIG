@@ -10,20 +10,20 @@
 
 #include <imgui-SFML.h>
 #include <imgui.h>
+#include <random>
 
 void Asteroids_Game::init()
 {
-    // ————— setup window ——————
-    //window.setIcon() // TODO: Do this some time
     obj_manager.create_objects_init(r_engine,log);
     score = 0;
     score_scaler = 1;
+    has_beaten_highscore = false;
 }
 
 void Asteroids_Game::run_game()
 {
     high_score = 0; // TEMP
-
+    //window.setIcon() // TODO: Do this some time
     window.create(sf::VideoMode(WINDOW_SIZE),"Asteroids");
     window.setFramerateLimit(60);
     ImGui::SFML::Init(window);
@@ -34,8 +34,20 @@ void Asteroids_Game::run_game()
     r_engine.reset_game();
     init();
 
+    sound_track.emplace_back("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/ACTUAL_Music/track1.wav");
+    sound_track.emplace_back("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/ACTUAL_Music/track2.mp3");
+    sound_track.emplace_back("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/ACTUAL_Music/track3.mp3");
+    sound_track.emplace_back("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/ACTUAL_Music/track4.wav");
+    sound_track.emplace_back("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/ACTUAL_Music/track5.wav");
+    sound_track.emplace_back("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/ACTUAL_Music/track6.wav");
+    auto rd = std::random_device {};
+    auto rng = std::default_random_engine { rd() };
+    std::shuffle(std::begin(sound_track), std::end(sound_track), rng);
+
     while (window.isOpen())
     {
+        std::cout << sound_track.at(current_track_playing).getVolume() << '\n';
+
         delta_time = clock.restart();
         delta_time_seconds = delta_time.asSeconds();
 
@@ -46,6 +58,9 @@ void Asteroids_Game::run_game()
             if (event->is<sf::Event::Closed>())
                 window.close();
         }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Backslash))
+            obj_manager.player_is_dead = true;
 
         // ———————————————————————————————————————
         // SCORE STUFF
@@ -63,7 +78,41 @@ void Asteroids_Game::run_game()
             score += r_engine.score_personal;
             r_engine.score_personal = 0.0f;
 
-            if (high_score < score) high_score = score;
+            if (high_score < score)
+            {
+                if (has_beaten_highscore == false and high_score != 0)
+                    sound_beat_highscore.play();
+                high_score = score;
+                has_beaten_highscore = true;
+            }
+        }
+
+        // ———————————————————————————————————————
+        // MUSIC
+        // ———————————————————————————————————————
+        if (obj_manager.player_is_dead == true and
+            sound_track.at(current_track_playing).getVolume() > PLAYER_DEAD_MUSIC_VOLUME)
+        {
+            sound_track.at(current_track_playing).setVolume(sound_track.at(current_track_playing).getVolume() - 1 );
+        } else if((obj_manager.player_is_dead == false and
+            sound_track.at(current_track_playing).getVolume() < MUSIC_VOLUME))
+        {
+            sound_track.at(current_track_playing).setVolume(sound_track.at(current_track_playing).getVolume() + 1 );
+        } else if((obj_manager.player_is_dead == false and
+            sound_track.at(current_track_playing).getVolume() > MUSIC_VOLUME))
+        {
+            sound_track.at(current_track_playing).setVolume(MUSIC_VOLUME);
+        }
+
+        if (sound_track.at(current_track_playing).getStatus() != sf::SoundSource::Status::Playing)
+        {
+            if ((sound_track.size() - (current_track_playing + 1) ) > 0)
+                current_track_playing++;
+            else
+                current_track_playing = 0;
+
+            sound_track.at(current_track_playing).setVolume(PLAYER_DEAD_MUSIC_VOLUME);
+            sound_track.at(current_track_playing).play();
         }
 
         // ———————————————————————————————————————

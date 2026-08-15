@@ -33,4 +33,12 @@ public:
     {
         sound.stop();
     }
+    void setVolume(const float v)
+    {
+        sound.setVolume(v);
+    }
+    void set_pitch(const float p)
+    {
+        sound.setPitch(p);
+    }
 };

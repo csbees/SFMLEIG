@@ -11,13 +11,16 @@
 #include "../Engine Systems/sound_container.h"
 #include "../Engine Systems/Managers/Game.h"
 #include "../Engine Systems/Managers/Object_Manager.h"
+#include "SFML/Audio/Music.hpp"
 
 class Asteroids_Game final : public Game
 {
 public:
     Asteroids_Game()
         : obj_manager(r_engine), aster_manager(r_engine,log, obj_manager),
-          sound_play_again("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/start_game.wav") {}
+          sound_play_again("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/start_game.wav"),
+          sound_beat_highscore("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/beat_highscore.mp3")
+    {}
     // Sets up essential systems
     void init() override;
     // Runs every frame,
@@ -42,10 +45,19 @@ private:
     int high_score;
     float score_scaler = 1;
     int timer_add_score = 60;
+    bool has_beaten_highscore = false;
 
     bool first_opened_game = true;
 
+    std::vector<sf::Music> sound_track;
+
     Sound_Container sound_play_again;
+    Sound_Container sound_beat_highscore;
+    // the index for sound_track
+    int current_track_playing = 0;
+    const float PLAYER_DEAD_MUSIC_VOLUME = 30;
+    const float MUSIC_VOLUME = 160;
+
 
 
 };

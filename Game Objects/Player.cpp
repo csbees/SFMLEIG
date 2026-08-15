@@ -4,6 +4,7 @@
 
 #include "Player.h"
 #include <cmath>
+#include <random>
 
 void Player::update(float delta_time)
 {
@@ -30,6 +31,8 @@ void Player::update(float delta_time)
     }
     velocity_x *= 0.999;
     velocity_y *= 0.999;
+
+    velocity_turning *= 0.9;
 
     if  (
         (node_phy.position.x > 700) or
@@ -69,6 +72,8 @@ void Player::update(float delta_time)
 
     node_phy.general_velocity = abs(velocity_x) + abs(velocity_y);
 
+    node_phy.angle_degrees += velocity_turning;
+
     last_recorded_direction = currently_moving_direction;
     if (last_recorded_direction == node_phy.angle_radians )
     {
@@ -80,13 +85,10 @@ void Player::update(float delta_time)
     if ((iblink_frames % 2) == 1)
     {
         node_draw.flag_render_self = false;
-        std::cout << "don't render\n";
     } else node_draw.flag_render_self = true;
     if (blink_frames > 0)
     {
         blink_frames -= 0.1;
-        std::cout << blink_frames << '\n'
-                  << "result of % " << (iblink_frames % 2) << "\n";
     }
 
 }
@@ -97,13 +99,15 @@ void Player::collided()
     blink_frames = 10.0f;
     i_frames = I_FRAMES_AMOUNT;
     lives--;
-    sound_hit.play();
+    if (lives > 0)
+        sound_hit.play();
 }
 
 void Player::player_loses()
 {
     if (node_draw.flag_render_self)
     {
+        sound_die.setVolume(200);
         sound_die.play();
     }
     node_draw.flag_render_self = false;
@@ -144,12 +148,12 @@ void Player::calculate_movement()
         {
         case sf::Keyboard::Key::A:
             {
-                node_phy.angle_degrees    -= SPEED_TURNING * p_delta_time;
+                velocity_turning    -= SPEED_TURNING * p_delta_time;
             }
             break;
         case sf::Keyboard::Key::D:
             {
-                node_phy.angle_degrees    += SPEED_TURNING * p_delta_time;
+                velocity_turning    += SPEED_TURNING * p_delta_time;
             }
             break;
         case sf::Keyboard::Key::W:
@@ -176,6 +180,11 @@ void Player::shoot()
     if (shoot_timer > 1) return;
     obj_manager.create_object<Bullet>(r_engine, log, node_phy ,"/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Art/Plane.png");
     shoot_timer = 2.5;
+
+    std::mt19937 rng(std::random_device{}());
+    auto random_pitch = std::uniform_int_distribution<float>(0.8, 1)(rng);
+
+    sound_shoot.set_pitch(random_pitch);
     sound_shoot.play();
 
 }

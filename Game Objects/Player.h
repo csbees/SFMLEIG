@@ -30,11 +30,12 @@ public:
            const std::string& sprite_file = "-1")
         : Entity(given_r_engine, given_log, sprite_file), r_engine(given_r_engine), obj_manager(given_obj_manager),
           sound_shoot("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/laserShoot.wav"),
-          sound_die("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/explosion.wav"),
+          sound_die("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/death_soundV3.mp3"),
           sound_hit("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/hitHurt.wav")
     {
         node_draw.my_type = PLAYER;
         node_draw.sprite.setScale(sf::Vector2f(.1,0.1));
+
         node_draw.sprite.setOrigin(sf::Vector2f(250,250));
         node_phy.position.x = 350;
         node_phy.position.y = 450;
@@ -42,6 +43,10 @@ public:
         node_draw.sprite.setPosition({node_phy.position.x, node_phy.position.y});
         const auto corrected_player_angle = (node_draw.sprite.getRotation() + sf::degrees(90));
         node_draw.sprite.setRotation(corrected_player_angle);
+
+        sound_hit.setVolume(7);
+        sound_shoot.setVolume(10);
+        sound_die.setVolume(20);
     }
 
     bool dead_state = false;
@@ -69,11 +74,12 @@ private:
     const int I_FRAMES_AMOUNT = 100;
     float blink_frames = 0;
 
-    const float SPEED_TURNING = 300;
+    const float SPEED_TURNING = 50;
     const float SPEED_MOVE    = 400;
     const float SPEED_MAX     = 1000;
     float velocity_x = 0;
     float velocity_y = 0;
     int lives = 3;
+    float velocity_turning = 0;
 };
 
