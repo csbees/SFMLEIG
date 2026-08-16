@@ -21,7 +21,11 @@ public:
     explicit Sound_Container(std::string given_sound_file) : sound(buffer), sound_file(std::move(given_sound_file))
     {
         //Initialize audio
-        buffer.loadFromFile(sound_file);
+        if (buffer.loadFromFile(sound_file))
+        {
+            auto error_message = "Could not load sound from file : " + sound_file;
+            std::__throw_runtime_error(error_message.c_str());
+        }
         sound.setBuffer(buffer);
     }
 
