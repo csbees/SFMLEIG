@@ -39,7 +39,7 @@ private:
 
 inline void Asteroid_Manager::create_asteroid(const Physics_node& node_phy)
 {
-    obj_manager.create_object<Asteroid>(r_engine, log, node_phy ,"/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Art/Plane.png",
+    obj_manager.create_object<Asteroid>(r_engine, log, node_phy ,"/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Art/rock_p.png",
        this, 1);
 }
 

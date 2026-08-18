@@ -93,8 +93,8 @@ void Object_Manager::check_collision() const
                 if ((j_player.i_frames > 0)) continue;
             }
 
-            sf::FloatRect box = i->node_draw.sprite.getGlobalBounds();
-            sf::FloatRect other_box = j->node_draw.sprite.getGlobalBounds();
+            sf::FloatRect box = i->node_draw.hit_box;
+            sf::FloatRect other_box = j->node_draw.hit_box;
 
             if (box.findIntersection(other_box) and j->node_draw.ID != i->node_draw.ID)
             {
@@ -108,5 +108,5 @@ void Object_Manager::check_collision() const
 
 void Object_Manager::create_objects_init(Render_engine& r_engine, logger& log)
 {
-    create_object<Player>(r_engine, log, *this,"/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Art/space_ship_p.png");
+    create_object<Player>(r_engine, log, *this,"/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Art/space_ship_p_V3.png");
 }

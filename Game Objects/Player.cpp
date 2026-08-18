@@ -178,7 +178,7 @@ void Player::calculate_movement()
 void Player::shoot()
 {
     if (shoot_timer > 1) return;
-    obj_manager.create_object<Bullet>(r_engine, log, node_phy ,"/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Art/Plane.png");
+    obj_manager.create_object<Bullet>(r_engine, log, node_phy ,"/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Art/Bullet_V3.png");
     shoot_timer = 2.5;
 
     std::mt19937 rng(std::random_device{}());

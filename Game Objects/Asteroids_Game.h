@@ -51,7 +51,7 @@ private:
 
     std::vector<sf::Music> sound_track;
 
-    Sound_Container sound_play_again;
+   Sound_Container sound_play_again;
     Sound_Container sound_beat_highscore;
     // the index for sound_track
     int current_track_playing = 0;

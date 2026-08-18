@@ -20,10 +20,14 @@ public:
         node_phy.position.x = players_phy_node.position.x;
         node_phy.position.y = players_phy_node.position.y;
         node_phy.angle_radians = players_phy_node.angle_radians;
+        node_phy.angle_degrees = players_phy_node.angle_degrees;
 
         node_phy.general_velocity = BULLET_SPEED + players_phy_node.general_velocity;
 
         node_draw.sprite.setPosition(sf::Vector2f(node_phy.position));
+        node_draw.sprite.setRotation(sf::radians(node_phy.angle_radians - 1.570796));
+        node_draw.sprite.setScale({0.5,0.5});
+        node_draw.sprite.setOrigin({50,25});
 
         node_draw.my_type = BULLET;
 

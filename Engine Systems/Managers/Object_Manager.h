@@ -27,6 +27,7 @@ public:
     void create_objects_init(Render_engine& r_engine, logger& log);
     void reset_game();
 
+    // Create Stuff
     template <typename T>
     inline void create_object(Render_engine& given_r_engine, logger& log,  const std::string& sprite_file)
     {
