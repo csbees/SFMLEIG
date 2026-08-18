@@ -91,6 +91,9 @@ void Player::update(float delta_time)
         blink_frames -= 0.1;
     }
 
+    node_draw.hit_box.setPosition(node_phy.position);
+    node_draw.hit_box.setRotation(sf::degrees(node_phy.angle_degrees));
+
 }
 
 void Player::collided()

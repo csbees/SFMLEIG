@@ -24,9 +24,12 @@ struct Draw_node
     sf::Sprite sprite;
     Draw_node() : sprite(texture) {}
 
-    bool flag_is_animated = false;
-    bool flag_render_self = true;
-    bool flag_dead        = false;
+    bool flag_is_animated  = false;
+    bool flag_render_self  = true;
+    bool flag_dead         = false;
+    bool flag_using_hitbox = false;
+
+    sf::RectangleShape hit_box;
 
     OBJECT_TYPE my_type = UNKNOWN;
 };

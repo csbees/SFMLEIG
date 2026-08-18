@@ -51,6 +51,7 @@ public:
     }
 
     bool player_is_dead = false;
+    int player_lives = -1;
 
 private:
     // Owns all Entities

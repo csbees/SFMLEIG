@@ -23,6 +23,11 @@ void Object_Manager::update_objects(float delta_time)
             player_is_dead = true;
             return;
         }
+        if (e->node_draw.my_type == OBJECT_TYPE::PLAYER)
+        {
+            auto& e_player = dynamic_cast<Player&>(*e);
+            player_lives = e_player.get_lives();
+        }
 
         if (e->label_dead)
         {
@@ -93,10 +98,10 @@ void Object_Manager::check_collision() const
                 if ((j_player.i_frames > 0)) continue;
             }
 
-            sf::FloatRect box = i->node_draw.hit_box;
-            sf::FloatRect other_box = j->node_draw.hit_box;
+            sf::RectangleShape box = i->node_draw.hit_box;
+            sf::RectangleShape other_box = j->node_draw.hit_box;
 
-            if (box.findIntersection(other_box) and j->node_draw.ID != i->node_draw.ID)
+            if (box.getGlobalBounds().findIntersection(other_box.getGlobalBounds()) and j->node_draw.ID != i->node_draw.ID)
             {
                 i->collided();
                 j->collided();

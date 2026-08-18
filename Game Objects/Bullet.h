@@ -32,6 +32,14 @@ public:
         node_draw.my_type = BULLET;
 
         disable_screen_wrap = true; // maybe? though I may want to turn it back on
+
+        node_draw.hit_box.setOutlineThickness(1.f);
+        node_draw.hit_box.setOutlineColor(sf::Color(250, 0, 0));
+        node_draw.hit_box.setFillColor(sf::Color::Transparent);
+        node_draw.hit_box.setOrigin({50,75});
+        node_draw.hit_box.setSize({50,100});
+        node_draw.hit_box.setScale({0.5,0.5});
+
     }
 
 private:

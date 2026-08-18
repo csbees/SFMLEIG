@@ -26,6 +26,7 @@ void Render_engine::draw_objects(sf::RenderWindow& window)
             continue;
         if (draw_reel.at(i)->flag_is_animated == false)
         {
+            window.draw(draw_reel.at(i)->hit_box);
             window.draw(draw_reel.at(i)->sprite);
             continue;
         }

@@ -46,7 +46,6 @@ void Asteroids_Game::run_game()
 
     while (window.isOpen())
     {
-        std::cout << sound_track.at(current_track_playing).getVolume() << '\n';
 
         delta_time = clock.restart();
         delta_time_seconds = delta_time.asSeconds();
@@ -135,7 +134,7 @@ void Asteroids_Game::run_game()
             ImVec2(0.5f, 0.5f)
         );
 
-        ImGui::Begin("-", nullptr, button_rest_flags);
+        ImGui::Begin("Play Again Button", nullptr, button_rest_flags);
 
         if (obj_manager.player_is_dead == true)
         {
@@ -161,6 +160,7 @@ void Asteroids_Game::run_game()
         ImGuiFocusedFlags score_flags =
             ImGuiWindowFlags_NoDecoration |
             ImGuiWindowFlags_NoMove |
+                ImGuiWindowFlags_NoBackground |
             ImGuiWindowFlags_NoSavedSettings |
             ImGuiWindowFlags_AlwaysAutoResize;
         if (obj_manager.player_is_dead == false)
@@ -211,6 +211,58 @@ void Asteroids_Game::run_game()
         }
 
         ImGui::End();
+
+        ImGui::SetNextWindowPos(
+            ImVec2(570,60),
+            ImGuiCond_Always,
+            ImVec2(0.5f, 0.5f)
+        );
+
+        ImGui::Begin("Score_label_alive", nullptr, score_flags);
+
+        if (obj_manager.player_is_dead == false)
+        {
+
+            ImGui::Text("Score: ", ImVec2(100, 50));
+        }
+
+        ImGui::End();
+
+        ImGui::SetNextWindowPos(
+                   ImVec2(570,30),
+                   ImGuiCond_Always,
+                   ImVec2(0.5f, 0.5f)
+               );
+
+        ImGui::Begin("Lives text", nullptr, score_flags);
+
+        if (obj_manager.player_is_dead == false)
+        {
+
+            ImGui::Text("Lives: ", ImVec2(100, 50));
+        }
+
+        ImGui::End();
+
+        ImGui::SetNextWindowPos(
+                  ImVec2(650,30),
+                  ImGuiCond_Always,
+                  ImVec2(0.5f, 0.5f)
+              );
+
+        ImGui::Begin("Lives label", nullptr, score_flags);
+
+        if (obj_manager.player_is_dead == false)
+        {
+
+            ImGui::Text(std::to_string(obj_manager.player_lives).c_str(), ImVec2(100, 50));
+        }
+
+        ImGui::End();
+
+        // ———————————————————————————————————————
+        // END FRAME UPDATING
+        // ———————————————————————————————————————
 
         window.clear();
         if (obj_manager.player_is_dead == false)

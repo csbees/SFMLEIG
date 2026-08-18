@@ -28,10 +28,16 @@ public:
         node_draw.sprite.setPosition(sf::Vector2f(node_phy.position));
 
         node_draw.my_type = ASTEROID;
-        float scale_factor = rand() % 3;
-        node_draw.sprite.setScale({scale_factor,scale_factor});
+        //float scale_factor = rand() % 3;
+        //node_draw.sprite.setScale({scale_factor,scale_factor});
 
         asteroid_type = given_asteroid_type;
+
+        node_draw.hit_box.setOutlineThickness(1.f);
+        node_draw.hit_box.setOutlineColor(sf::Color(250, 0, 0));
+        node_draw.hit_box.setFillColor(sf::Color::Transparent);
+        node_draw.hit_box.setOrigin({25,25});
+        node_draw.hit_box.setSize({500,500});
     }
 
     void update(float) override;
