@@ -45,4 +45,13 @@ public:
     {
         sound.setPitch(p);
     }
+    void set_looping(const bool b)
+    {
+        sound.setLooping(b);
+    }
+
+    sf::Sound::Status get_status()
+    {
+        return sound.getStatus();
+    }
 };

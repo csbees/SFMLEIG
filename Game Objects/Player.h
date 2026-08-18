@@ -19,8 +19,8 @@ public:
     [[nodiscard]] std::vector<sf::Keyboard::Key> check_for_input();
     void calculate_movement();
     void shoot();
-    void got_hit();
     void player_loses();
+    void play_boosters();
 
     using Entity::Entity;
 
@@ -32,27 +32,31 @@ public:
           sound_shoot("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/laserShoot.wav"),
           sound_die("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/death_soundV3.mp3"),
           sound_hit("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/hitHurt.wav")
-    {
-        node_draw.my_type = PLAYER;
-        node_draw.sprite.setScale(sf::Vector2f(0.1,0.1));
 
-        node_draw.sprite.setOrigin(sf::Vector2f(250,250));
+    {
         node_phy.position.x = 350;
         node_phy.position.y = 450;
-
         node_draw.sprite.setPosition({node_phy.position.x, node_phy.position.y});
         const auto corrected_player_angle = (node_draw.sprite.getRotation() + sf::degrees(90));
         node_draw.sprite.setRotation(corrected_player_angle);
 
+        node_draw.my_type = PLAYER;
+        node_draw.origin = {250,250};
+        node_draw.scale = {0.1,0.1};
+        sf::Vector2f hitbox_transformation = {200,200};
+
+        node_draw.node_hitbox.set_transformations(hitbox_transformation);
+        node_draw.node_hitbox.set_size(node_draw.sprite);
+        node_draw.node_hitbox.set_scale(node_draw.scale);
+        node_draw.node_hitbox.set_origin({node_draw.node_hitbox.get_origin().x + 60, node_draw.node_hitbox.get_origin().y});
+
+        node_draw.sprite.setOrigin(node_draw.origin);
+        node_draw.sprite.setScale(node_draw.scale);
+
         sound_hit.setVolume(7);
         sound_shoot.setVolume(10);
-        sound_die.setVolume(20);
+        sound_die.setVolume(15);
 
-        node_draw.hit_box.setOutlineThickness(1.f);
-        node_draw.hit_box.setOutlineColor(sf::Color(250, 0, 0));
-        node_draw.hit_box.setFillColor(sf::Color::Transparent);
-        node_draw.hit_box.setOrigin({25,25});
-        node_draw.hit_box.setSize({50,50});
     }
 
     inline int get_lives() const { return  lives; }
@@ -72,6 +76,9 @@ private:
     Sound_Container sound_shoot;
     Sound_Container sound_hit;
     Sound_Container sound_die;
+
+    std::vector<Sound_Container> booster_sounds;
+    int timer_booster = 0;
 
     float last_recorded_direction = 0;
     bool new_movement_recorded = false;

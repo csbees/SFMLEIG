@@ -17,28 +17,28 @@ public:
            const std::string& sprite_file = "-1")
         : Entity(given_r_engine, given_log, sprite_file)
     {
-        node_phy.position.x = players_phy_node.position.x;
-        node_phy.position.y = players_phy_node.position.y;
+        node_phy.position = players_phy_node.position;
         node_phy.angle_radians = players_phy_node.angle_radians;
         node_phy.angle_degrees = players_phy_node.angle_degrees;
-
         node_phy.general_velocity = BULLET_SPEED + players_phy_node.general_velocity;
+        // node_phy.general_velocity = 0;
+
+        node_draw.my_type = BULLET;
+        node_draw.origin = {50,25};
+        node_draw.scale = {0.5,0.5};
+        // sf::Vector2f hitbox_transformation = {200,200};
+
+        // node_draw.node_hitbox.set_transformations(hitbox_transformation);
+        node_draw.node_hitbox.set_size({50,100});
+        node_draw.node_hitbox.set_scale(node_draw.scale);
+        node_draw.node_hitbox.set_origin({25, 50});
+        // node_draw.node_hitbox.set_origin({node_draw.node_hitbox.get_origin().x + 60, node_draw.node_hitbox.get_origin().y});
 
         node_draw.sprite.setPosition(sf::Vector2f(node_phy.position));
         node_draw.sprite.setRotation(sf::radians(node_phy.angle_radians - 1.570796));
-        node_draw.sprite.setScale({0.5,0.5});
-        node_draw.sprite.setOrigin({50,25});
+        node_draw.sprite.setScale(node_draw.scale);
+        node_draw.sprite.setOrigin(node_draw.origin);
 
-        node_draw.my_type = BULLET;
-
-        disable_screen_wrap = true; // maybe? though I may want to turn it back on
-
-        node_draw.hit_box.setOutlineThickness(1.f);
-        node_draw.hit_box.setOutlineColor(sf::Color(250, 0, 0));
-        node_draw.hit_box.setFillColor(sf::Color::Transparent);
-        node_draw.hit_box.setOrigin({50,75});
-        node_draw.hit_box.setSize({50,100});
-        node_draw.hit_box.setScale({0.5,0.5});
 
     }
 

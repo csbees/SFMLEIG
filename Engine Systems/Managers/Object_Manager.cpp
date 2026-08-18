@@ -98,8 +98,8 @@ void Object_Manager::check_collision() const
                 if ((j_player.i_frames > 0)) continue;
             }
 
-            sf::RectangleShape box = i->node_draw.hit_box;
-            sf::RectangleShape other_box = j->node_draw.hit_box;
+            sf::RectangleShape box = i->node_draw.node_hitbox.self;
+            sf::RectangleShape other_box = j->node_draw.node_hitbox.self;
 
             if (box.getGlobalBounds().findIntersection(other_box.getGlobalBounds()) and j->node_draw.ID != i->node_draw.ID)
             {

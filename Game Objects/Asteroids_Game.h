@@ -19,7 +19,8 @@ public:
     Asteroids_Game()
         : obj_manager(r_engine), aster_manager(r_engine,log, obj_manager),
           sound_play_again("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/start_game.wav"),
-          sound_beat_highscore("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/beat_highscore.mp3")
+          sound_beat_highscore("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/beat_highscore.mp3"),
+          sound_engine("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/UGG.mp3")
     {}
     // Sets up essential systems
     void init() override;
@@ -51,8 +52,10 @@ private:
 
     std::vector<sf::Music> sound_track;
 
-   Sound_Container sound_play_again;
+    Sound_Container sound_play_again;
     Sound_Container sound_beat_highscore;
+    Sound_Container sound_engine;
+
     // the index for sound_track
     int current_track_playing = 0;
     const float PLAYER_DEAD_MUSIC_VOLUME = 30;

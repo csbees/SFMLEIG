@@ -18,6 +18,8 @@ void Player::update(float delta_time)
         return;
     }
 
+    // if (timer_booster > 1) timer_booster--;
+
     if (shoot_timer > 1)
     {
         shoot_timer -= 10 * p_delta_time;
@@ -91,13 +93,13 @@ void Player::update(float delta_time)
         blink_frames -= 0.1;
     }
 
-    node_draw.hit_box.setPosition(node_phy.position);
-    node_draw.hit_box.setRotation(sf::degrees(node_phy.angle_degrees));
+    node_draw.node_hitbox.update_hitbox(node_phy.position,sf::degrees(node_phy.angle_degrees));
 
 }
 
 void Player::collided()
 {
+    return; // temp for testing
     if (i_frames > 0) { return; }
     blink_frames = 10.0f;
     i_frames = I_FRAMES_AMOUNT;
@@ -116,6 +118,20 @@ void Player::player_loses()
     node_draw.flag_render_self = false;
     label_dead = true;
 }
+
+// void Player::play_boosters()
+// {
+//     if (timer_booster > 1) return;
+//     for (auto& s : booster_sounds)
+//     {
+//         if (s.get_status() != sf::SoundSource::Status::Playing)
+//         {
+//             s.play();
+//             timer_booster = 4;
+//             std::cout << "played sound\n";
+//             return;
+//         }
+// }
 
 std::vector<sf::Keyboard::Key> Player::check_for_input()
 {

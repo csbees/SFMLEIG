@@ -21,7 +21,7 @@ void Asteroid::update(float delta_time)
     node_draw.sprite.setRotation(sf::degrees(node_phy.angle_degrees));
     node_draw.sprite.setPosition(sf::Vector2f(node_phy.position));
 
-    node_draw.hit_box.setPosition(node_phy.position);
-    node_draw.hit_box.setRotation(sf::degrees(node_phy.angle_degrees));
+    node_draw.node_hitbox.update_hitbox(node_phy.position,sf::degrees(node_phy.angle_degrees));
+
 }
 
