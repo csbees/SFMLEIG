@@ -8,7 +8,7 @@
 void Render_engine::draw_objects(sf::RenderWindow& window)
 {
 
-    for (int i = 0; i < draw_reel.size(); i++)
+    for (int i = draw_reel.size() - 1; i > -1; i--)
     {
         if (draw_reel.at(i)->flag_dead)
         {
@@ -26,7 +26,7 @@ void Render_engine::draw_objects(sf::RenderWindow& window)
             continue;
         if (draw_reel.at(i)->flag_is_animated == false)
         {
-            window.draw(draw_reel.at(i)->hit_box);
+            window.draw(draw_reel.at(i)->node_hitbox.self);
             window.draw(draw_reel.at(i)->sprite);
             continue;
         }
