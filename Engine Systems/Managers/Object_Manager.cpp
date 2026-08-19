@@ -27,6 +27,7 @@ void Object_Manager::update_objects(float delta_time)
         {
             auto& e_player = dynamic_cast<Player&>(*e);
             player_lives = e_player.get_lives();
+            player_shots = e_player.get_available_shots();
         }
 
         if (e->label_dead)

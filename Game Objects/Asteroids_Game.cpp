@@ -15,6 +15,7 @@
 void Asteroids_Game::init()
 {
     obj_manager.create_objects_init(r_engine,log);
+    aster_manager.init_package();
     score = 0;
     score_scaler = 1;
     has_beaten_highscore = false;
@@ -22,13 +23,22 @@ void Asteroids_Game::init()
 
 void Asteroids_Game::run_game()
 {
-    high_score = 0; // TEMP
-    //window.setIcon() // TODO: Do this some time
+    high_score = 0; // TEMP, ADD TO FILE???
+
     window.create(sf::VideoMode(WINDOW_SIZE),"Asteroids");
     window.setFramerateLimit(60);
+
+    sf::Image da_icon;
+    if ( !da_icon.loadFromFile("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Art/space_ship_p_v3.png"))
+        std::cout << "Icon failed, rip\n";
+    else
+         window.setIcon(da_icon.getSize(), da_icon.getPixelsPtr());
+
     ImGui::SFML::Init(window);
 
     obj_manager.player_is_dead = true;
+    float f_player_shots = 0;
+    bool player_reloading_shot = false;
 
     obj_manager.reset_game();
     r_engine.reset_game();
@@ -44,9 +54,11 @@ void Asteroids_Game::run_game()
     auto rng = std::default_random_engine { rd() };
     std::shuffle(std::begin(sound_track), std::end(sound_track), rng);
 
+    float temp_bar = 1.f;
+
     while (window.isOpen())
     {
-
+        temp_bar -= 0.001;
         delta_time = clock.restart();
         delta_time_seconds = delta_time.asSeconds();
 
@@ -146,12 +158,20 @@ void Asteroids_Game::run_game()
             char const *casted_play_message = play_message.c_str();
             if (ImGui::Button(casted_play_message, ImVec2(100.0f,50.0f)))
             {
-                obj_manager.reset_game();
-                r_engine.reset_game();
-                init();
-                obj_manager.player_is_dead = false;
-                first_opened_game = false;
-                sound_play_again.play();
+                if (play_message != "Play")
+                {
+                    obj_manager.reset_game();
+                    r_engine.reset_game();
+                    init();
+                    obj_manager.player_is_dead = false;
+                    first_opened_game = false;
+                    sound_play_again.play();
+                } else
+                {
+                    obj_manager.player_is_dead = false;
+                    first_opened_game = false;
+                    sound_play_again.play();
+                }
             }
         }
 
@@ -258,6 +278,28 @@ void Asteroids_Game::run_game()
             ImGui::Text(std::to_string(obj_manager.player_lives).c_str(), ImVec2(100, 50));
         }
 
+        ImGui::End();
+
+        // amount of shots bar
+        ImGui::SetNextWindowPos(
+            ImVec2(600,90),
+            ImGuiCond_Always,
+            ImVec2(0.5f, 0.5f)
+            );
+
+        ImGui::Begin("Power bar", nullptr, button_rest_flags);
+        if (obj_manager.player_is_dead == false)
+        {
+            if (obj_manager.player_shots > 1)
+                f_player_shots = (static_cast<float>(obj_manager.player_shots) / 10);
+            else
+            {
+                if (obj_manager.player_shots > 0)
+                    f_player_shots = 0;
+                f_player_shots -= 0.05;
+            }
+            ImGui::ProgressBar(f_player_shots, {100, 20} );
+        }
         ImGui::End();
 
         // ———————————————————————————————————————

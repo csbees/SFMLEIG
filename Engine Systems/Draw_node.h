@@ -29,6 +29,7 @@ struct Draw_node
     bool flag_render_self  = true;
     bool flag_dead         = false;
     bool flag_using_hitbox = false;
+    bool flag_being_culled = false;
 
     sf::Vector2f origin = {0,0};
     sf::Vector2f scale = {1,1};

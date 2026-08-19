@@ -59,7 +59,8 @@ public:
 
     }
 
-    inline int get_lives() const { return  lives; }
+    inline int get_lives() const            { return  lives; }
+    inline  int get_available_shots() const { return my_bullets; }
 
     bool dead_state = false;
     int i_frames = 0;
@@ -95,7 +96,13 @@ private:
     float velocity_y = 0;
     float velocity_turning = 0;
 
-    const int STARTING_LIVES = 3;
+    int shots_available = AMOUNT_PLAYER_BULLETS;
+    int my_bullets = 16;
+    int timer_reload = 0;
+    const int RELOAD_TIME = 170;
+    const int AMOUNT_PLAYER_BULLETS = 9;
+
+    const int STARTING_LIVES = 5;
     int lives = STARTING_LIVES;
 };
 

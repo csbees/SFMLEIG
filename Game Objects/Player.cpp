@@ -18,12 +18,12 @@ void Player::update(float delta_time)
         return;
     }
 
-    // if (timer_booster > 1) timer_booster--;
-
-    if (shoot_timer > 1)
+    if (shoot_timer > 1) { shoot_timer -= 10 * p_delta_time; }
+     if (timer_reload > -2)
     {
-        shoot_timer -= 10 * p_delta_time;
-    }
+         timer_reload--;
+         if (timer_reload < 1) {my_bullets = 16; }
+     }
 
     calculate_movement();
     node_phy.angle_radians = node_phy.angle_degrees * (3.14159265f / 180.f);
@@ -99,7 +99,6 @@ void Player::update(float delta_time)
 
 void Player::collided()
 {
-    return; // temp for testing
     if (i_frames > 0) { return; }
     blink_frames = 10.0f;
     i_frames = I_FRAMES_AMOUNT;
@@ -196,6 +195,7 @@ void Player::calculate_movement()
 
 void Player::shoot()
 {
+    if (my_bullets < 1) return;
     if (shoot_timer > 1) return;
     obj_manager.create_object<Bullet>(r_engine, log, node_phy ,"/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Art/Bullet_V3.png");
     shoot_timer = 2.5;
@@ -205,6 +205,9 @@ void Player::shoot()
 
     sound_shoot.set_pitch(random_pitch);
     sound_shoot.play();
+    my_bullets--;
+    if (my_bullets < 1) timer_reload = RELOAD_TIME;
+
 
 }
 

@@ -23,12 +23,12 @@ public:
 
         node_phy.position = asteroid_phy_node.position;
         node_phy.angle_degrees = asteroid_phy_node.angle_degrees;
-        node_phy.general_velocity = 5;//asteroid_phy_node.general_velocity;
+        node_phy.general_velocity = asteroid_phy_node.general_velocity;
         node_draw.sprite.setPosition(sf::Vector2f(node_phy.position));
 
-        node_draw.origin = {300,300};
-        node_draw.scale = {0.1,0.1};
-        sf::Vector2f hitbox_transformation = {300,300};
+        node_draw.origin = {270,270};
+        node_draw.scale = {given_scale_facter,given_scale_facter};
+        sf::Vector2f hitbox_transformation = {270,270};
 
         node_draw.node_hitbox.set_transformations(hitbox_transformation);
         node_draw.node_hitbox.set_size(node_draw.sprite);
@@ -37,11 +37,12 @@ public:
 
 
         node_draw.my_type = ASTEROID;
-        node_draw.sprite.setScale({given_scale_facter,given_scale_facter});
+        node_draw.sprite.setScale(node_draw.scale);
         node_draw.sprite.setOrigin(node_draw.origin);
 
         asteroid_type = given_asteroid_type;
 
+        health = DEFAULT_HEATH; //* (given_scale_facter * 10);
     }
 
     void update(float) override;
@@ -49,5 +50,9 @@ private:
     int asteroid_type; // 1 - big, 2 - medium , 3 - small
     Asteroid_Manager* asteroid_manager_;
     int health;
+    const int DEFAULT_HEATH = 3;
+    bool entered_player_area_yet = false;
+    int just_took_damage = 0;
     void collided() override;
+    void die();
 };

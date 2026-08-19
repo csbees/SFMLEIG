@@ -14,20 +14,23 @@ void Render_engine::draw_objects(sf::RenderWindow& window)
         {
             if (draw_reel.at(i)->my_type == OBJECT_TYPE::ASTEROID)
             {
-                score_personal += (100.0f * draw_reel.at(i)->sprite.getScale().x);
+                score_personal += (500.0f);
+                std::cout << "ASTEROID DESTROYED\n";
             }
             draw_reel.erase(draw_reel.begin() + i);
             continue;
         }
         if (draw_reel.at(i)->flag_render_self == false) continue;
-        if (draw_reel.at(i)->sprite.getPosition().x > 800 or draw_reel.at(i)->sprite.getPosition().x < -50)
+        if ((draw_reel.at(i)->sprite.getPosition().x > 800 or draw_reel.at(i)->sprite.getPosition().x < -50) or
+           (draw_reel.at(i)->sprite.getPosition().y > 800 or draw_reel.at(i)->sprite.getPosition().y < -50))
+        {
+            draw_reel.at(i)->flag_being_culled = true;
             continue;
-        if (draw_reel.at(i)->sprite.getPosition().y > 800 or draw_reel.at(i)->sprite.getPosition().y < -50)
-            continue;
+        } else draw_reel.at(i)->flag_being_culled = false;
         if (draw_reel.at(i)->flag_is_animated == false)
         {
-            window.draw(draw_reel.at(i)->node_hitbox.self);
             window.draw(draw_reel.at(i)->sprite);
+            // window.draw(draw_reel.at(i)->node_hitbox.self);
             continue;
         }
 
