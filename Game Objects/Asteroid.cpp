@@ -8,7 +8,11 @@ void Asteroid::collided()
 {
     if (just_took_damage > 1) return;
     health--;
-    if (health < 1) die();
+    if (health < 1)
+    {
+        flag_killed_by_player = true;
+        die();
+    }
     just_took_damage = 2;
 }
 void Asteroid::die()

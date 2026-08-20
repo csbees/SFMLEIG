@@ -54,11 +54,8 @@ void Asteroids_Game::run_game()
     auto rng = std::default_random_engine { rd() };
     std::shuffle(std::begin(sound_track), std::end(sound_track), rng);
 
-    float temp_bar = 1.f;
-
     while (window.isOpen())
     {
-        temp_bar -= 0.001;
         delta_time = clock.restart();
         delta_time_seconds = delta_time.asSeconds();
 
@@ -86,8 +83,8 @@ void Asteroids_Game::run_game()
             }
             else timer_add_score--;
 
-            score += r_engine.score_personal;
-            r_engine.score_personal = 0.0f;
+            score += obj_manager.score_personal;
+            obj_manager.score_personal = 0.0f;
 
             if (high_score < score)
             {
@@ -291,16 +288,39 @@ void Asteroids_Game::run_game()
         if (obj_manager.player_is_dead == false)
         {
             if (obj_manager.player_shots > 1)
-                f_player_shots = (static_cast<float>(obj_manager.player_shots) / 10);
+            {
+                f_player_shots = (static_cast<float>(obj_manager.player_shots) * 0.0625);
+                if (playing_reloading_sound == true)
+                {
+                    sound_finish_reloading.play();
+                    playing_reloading_sound = false;
+                }
+            }
             else
             {
                 if (obj_manager.player_shots > 0)
                     f_player_shots = 0;
                 f_player_shots -= 0.05;
+                if (sound_reload.get_status() != sf::SoundSource::Status::Playing)
+                {
+                    sound_reload.play();
+                    playing_reloading_sound = true;
+                }
             }
             ImGui::ProgressBar(f_player_shots, {100, 20} );
         }
         ImGui::End();
+
+        // ———————————————————————————————————————
+        // EVIL ASTEROID
+        // ———————————————————————————————————————
+        if (obj_manager.timer_evil_asteroid < 1 and obj_manager.player_is_dead == false)
+        {
+            aster_manager.create_evil_asteroid(obj_manager.player_position);
+            obj_manager.timer_evil_asteroid = obj_manager.AMOUNT_EVIL_ASTEROID_TIMER;
+        }
+        if (!obj_manager.timer_evil_asteroid < 1 and obj_manager.player_is_dead == false)
+            obj_manager.timer_evil_asteroid--;
 
         // ———————————————————————————————————————
         // END FRAME UPDATING

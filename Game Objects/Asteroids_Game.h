@@ -20,7 +20,9 @@ public:
         : obj_manager(r_engine), aster_manager(r_engine,log, obj_manager),
           sound_play_again("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/start_game.wav"),
           sound_beat_highscore("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/beat_highscore.mp3"),
-          sound_engine("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/UGG.mp3")
+          sound_engine("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/UGG.mp3"),
+          sound_finish_reloading("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/finish_reload.mp3"),
+          sound_reload("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/reload_sound_again.wav")
     {}
     // Sets up essential systems
     void init() override;
@@ -54,7 +56,12 @@ private:
 
     Sound_Container sound_play_again;
     Sound_Container sound_beat_highscore;
+    Sound_Container sound_reload;
+    Sound_Container sound_finish_reloading;
+
     Sound_Container sound_engine;
+
+    bool playing_reloading_sound = false;
 
     // the index for sound_track
     int current_track_playing = 0;

@@ -22,6 +22,7 @@ public:
     void place_asteroids();
     void create_asteroid(const Physics_node& node_phy);
     void init_package();
+    void create_evil_asteroid(sf::Vector2f player_position);
     std::vector<std::unique_ptr<Asteroid>> all_asteroids;
 private:
     void create_asteroid_medium(const Physics_node& node_phy);

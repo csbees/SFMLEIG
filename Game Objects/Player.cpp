@@ -111,7 +111,7 @@ void Player::player_loses()
 {
     if (node_draw.flag_render_self)
     {
-        sound_die.setVolume(200);
+        sound_die.setVolume(90);
         sound_die.play();
     }
     node_draw.flag_render_self = false;

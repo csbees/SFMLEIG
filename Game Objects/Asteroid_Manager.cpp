@@ -48,8 +48,8 @@ void Asteroid_Manager::place_asteroids()
         asteroid_phy_node.angle_degrees = 180;
     }
     create_asteroid(asteroid_phy_node);
-    speed_range.x += 1; speed_range.y += 1;
-    asteroid_creation_scale += 0.005;
+    speed_range.x += 3; speed_range.y += 3;
+    asteroid_creation_scale += 0.0001;
     CREATE_ASTER_TIME -= 0.5;
     create_asteroid_timer = CREATE_ASTER_TIME;
 }
@@ -62,3 +62,41 @@ void Asteroid_Manager::init_package()
     CREATE_ASTER_TIME       = 60;
     speed_range          = {100, 300};
 }
+
+void Asteroid_Manager::create_evil_asteroid(const sf::Vector2f player_position)
+{
+    std::cout << "\n\nEvil thing created\n\n";
+    Physics_node asteroid_phy_node;
+
+    std::mt19937 rng(std::random_device{}());
+
+    auto which_side = std::uniform_int_distribution<int>(1, 4)(rng);
+
+    asteroid_phy_node.general_velocity =  std::uniform_real_distribution<float>(speed_range.y , speed_range.y + 100)(rng);
+
+    if (which_side == 1) // top
+    {
+        asteroid_phy_node.position.y = -100;
+        asteroid_phy_node.position.x = player_position.x;
+        asteroid_phy_node.angle_degrees = 90;
+    } else if (which_side == 2) // bottom
+    {
+        asteroid_phy_node.position.y = 800;
+        asteroid_phy_node.position.x = player_position.x;
+        asteroid_phy_node.angle_degrees = -90;
+
+    }
+    if (which_side == 3) // left
+    {
+        asteroid_phy_node.position.y = player_position.y;
+        asteroid_phy_node.position.x = -100;
+        asteroid_phy_node.angle_degrees = 0;
+    } else if (which_side == 4) // right
+    {
+        asteroid_phy_node.position.y = player_position.y;
+        asteroid_phy_node.position.x = 800;
+        asteroid_phy_node.angle_degrees = 180;
+    }
+    create_asteroid(asteroid_phy_node);
+}
+

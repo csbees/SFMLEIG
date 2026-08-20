@@ -3,7 +3,10 @@
 //
 #pragma once
 
+#include <random>
+
 #include "../Engine Systems/Entity.h"
+#include "../Engine Systems/sound_container.h"
 
 class Bullet final : public Entity
 {
@@ -15,7 +18,8 @@ public:
            logger& given_log,
            const Physics_node& players_phy_node,
            const std::string& sprite_file = "-1")
-        : Entity(given_r_engine, given_log, sprite_file)
+        : Entity(given_r_engine, given_log, sprite_file),
+          sound_hit("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/bullet_hit_thing.wav")
     {
         node_phy.position = players_phy_node.position;
         node_phy.angle_radians = players_phy_node.angle_radians;
@@ -39,9 +43,16 @@ public:
         node_draw.sprite.setScale(node_draw.scale);
         node_draw.sprite.setOrigin(node_draw.origin);
 
+        std::mt19937 rng(std::random_device{}());
+        auto random_pitch = std::uniform_int_distribution<float>(0.8, 1)(rng);
+
+        sound_hit.set_pitch(random_pitch);
+        sound_hit.setVolume(15.f);
+
 
     }
 
 private:
     const float BULLET_SPEED = 1000;
+    Sound_Container sound_hit;
 };

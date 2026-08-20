@@ -28,6 +28,14 @@ void Object_Manager::update_objects(float delta_time)
             auto& e_player = dynamic_cast<Player&>(*e);
             player_lives = e_player.get_lives();
             player_shots = e_player.get_available_shots();
+            player_position = e_player.node_draw.sprite.getPosition();
+        }
+        if (e->node_draw.my_type == OBJECT_TYPE::ASTEROID and
+                   e->label_dead == true)
+        {
+            auto& the_asteroids = dynamic_cast<Asteroid&>(*e);
+            if (the_asteroids.flag_killed_by_player == true)
+                score_personal += 500;
         }
 
         if (e->label_dead)
@@ -47,6 +55,7 @@ void Object_Manager::update_objects(float delta_time)
         }
         pending_entities.clear(); // just in case
     }
+
 }
 
 void Object_Manager::reset_game()

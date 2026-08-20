@@ -53,6 +53,11 @@ public:
     bool player_is_dead = false;
     int player_lives = -1;
     int player_shots = 10;
+    sf::Vector2f player_position = {-100,0};
+    const int AMOUNT_EVIL_ASTEROID_TIMER = 300;
+    int timer_evil_asteroid = 0;
+
+    float score_personal = 0;
 
 private:
     // Owns all Entities

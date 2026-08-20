@@ -46,6 +46,9 @@ public:
     }
 
     void update(float) override;
+
+    bool flag_killed_by_player = false;
+
 private:
     int asteroid_type; // 1 - big, 2 - medium , 3 - small
     Asteroid_Manager* asteroid_manager_;

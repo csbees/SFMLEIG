@@ -7,6 +7,7 @@ void Bullet::collided()
 {
     node_draw.flag_dead = true;
     label_dead = true;
+    sound_hit.play();
 }
 
 void Bullet::update(float delta_time)
