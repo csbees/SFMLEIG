@@ -24,6 +24,8 @@ void Player::update(float delta_time)
          timer_reload--;
          if (timer_reload < 1) {my_bullets = 16; }
      }
+    if (sound_engine.get_volume() > 0) sound_engine.setVolume(sound_engine.get_volume() - 100);
+    if (sound_engine.get_volume() < 0) sound_engine.setVolume(0);
 
     calculate_movement();
     node_phy.angle_radians = node_phy.angle_degrees * (3.14159265f / 180.f);
@@ -95,6 +97,11 @@ void Player::update(float delta_time)
 
     node_draw.node_hitbox.update_hitbox(node_phy.position,sf::degrees(node_phy.angle_degrees));
 
+    booster_left.update(node_draw.sprite.getPosition(), node_phy.angle_degrees + 90, booster_left.showing,
+        {node_draw.origin.x- 40,node_draw.origin.y- 510}, blink_frames);
+    booster_right.update(node_draw.sprite.getPosition(), node_phy.angle_degrees + 90, booster_right.showing,
+        {node_draw.origin.x- 400,node_draw.origin.y- 510}, blink_frames);
+
 }
 
 void Player::collided()
@@ -114,6 +121,7 @@ void Player::player_loses()
         sound_die.setVolume(90);
         sound_die.play();
     }
+    sound_engine.setVolume(0);
     node_draw.flag_render_self = false;
     label_dead = true;
 }
@@ -138,14 +146,27 @@ std::vector<sf::Keyboard::Key> Player::check_for_input()
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
     {
         keys_pressed.push_back(sf::Keyboard::Key::W);
+    } else if (boosters_showing == 2)
+    {
+        booster_right.showing = false;
+        booster_left.showing = false;
+        boosters_showing = 0;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
     {
         keys_pressed.push_back(sf::Keyboard::Key::D);
+    } else if (boosters_showing == 3)
+    {
+        boosters_showing = 0;
+        booster_left.showing = false;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
     {
         keys_pressed.push_back(sf::Keyboard::Key::A);
+    } else if (boosters_showing == 1)
+    {
+        boosters_showing = 0;
+        booster_right.showing = false;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
     {
@@ -162,16 +183,37 @@ void Player::calculate_movement()
 
     for (auto i : keys_pressed)
     {
+        if (i == sf::Keyboard::Key::W)
+        {
+            booster_right.showing = true;
+            booster_left.showing = true;
+            boosters_showing = 2;
+        } else if (i == sf::Keyboard::Key::A)
+        {
+            booster_right.showing = true;
+            if ((boosters_showing != 2) or (boosters_showing != 3)) boosters_showing = 1;
+        }
+        else if ((i == sf::Keyboard::Key::D))
+        {
+            booster_left.showing = true;
+            if ((boosters_showing != 2) or (boosters_showing != 1))  boosters_showing = 3;
+        }
+
+
         switch (i)
         {
         case sf::Keyboard::Key::A:
             {
                 velocity_turning    -= SPEED_TURNING * p_delta_time;
+                if (sound_engine.get_volume() < 100)
+                    sound_engine.setVolume(sound_engine.get_volume() + 100);
             }
             break;
         case sf::Keyboard::Key::D:
             {
                 velocity_turning    += SPEED_TURNING * p_delta_time;
+                if (sound_engine.get_volume() < 100)
+                    sound_engine.setVolume(sound_engine.get_volume() + 100);
             }
             break;
         case sf::Keyboard::Key::W:
@@ -179,7 +221,11 @@ void Player::calculate_movement()
                 velocity_x += std::cos(currently_moving_direction) * SPEED_MOVE * p_delta_time;
                 velocity_y += std::sin(currently_moving_direction) * SPEED_MOVE * p_delta_time;
 
+                if (sound_engine.get_volume() < 300)
+                    sound_engine.setVolume(sound_engine.get_volume() + 300);
+
                 new_movement_recorded = true;
+
             }
             break;
         case sf::Keyboard::Key::Space:
@@ -210,4 +256,39 @@ void Player::shoot()
 
 
 }
+
+void Boosters::update(sf::Vector2f position, float angle_degrees, bool given_showing, sf::Vector2f origin, float blink_frames)
+{
+    showing = given_showing;
+    if (showing == false)
+        node_draw.flag_render_self = false;
+    else
+        node_draw.flag_render_self = true;
+
+    int iblink_frames = static_cast<int>(blink_frames);
+    if ((iblink_frames % 2) == 1 and node_draw.flag_render_self == true)
+    {
+        node_draw.flag_render_self = false;
+    }
+    if (blink_frames > 0)
+    {
+        blink_frames -= 0.1;
+    }
+
+    node_draw.sprite.setPosition(position);
+    node_draw.sprite.setRotation(sf::degrees(angle_degrees));
+    node_draw.sprite.setOrigin(origin);
+}
+
+void Boosters::collided()
+{
+
+}
+
+void Boosters::update(float delta_time)
+{
+
+}
+
+
 

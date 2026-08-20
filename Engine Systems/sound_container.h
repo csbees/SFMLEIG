@@ -41,6 +41,10 @@ public:
     {
         sound.setVolume(v);
     }
+    float get_volume() const
+    {
+        return sound.getVolume();
+    }
     void set_pitch(const float p)
     {
         sound.setPitch(p);

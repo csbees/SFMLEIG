@@ -8,6 +8,18 @@
 #include "SFML/Audio.hpp"
 #include "../Engine Systems/sound_container.h"
 
+class Boosters : public Entity
+{
+    using Entity::Entity;
+
+    void update(float delta_time) override;
+    void collided() override;
+
+public:
+    void update(sf::Vector2f position, float angle_degrees, bool given_showing, sf::Vector2f origin, float blink_frames);
+    bool showing = false;
+};
+
 class Player : public Entity
 {
 public:
@@ -31,7 +43,10 @@ public:
         : Entity(given_r_engine, given_log, sprite_file), r_engine(given_r_engine), obj_manager(given_obj_manager),
           sound_shoot("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/laserShoot.wav"),
           sound_die("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/death_soundV3.mp3"),
-          sound_hit("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/hitHurt.wav")
+          sound_hit("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/hitHurt.wav"),
+          sound_engine("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/Engine_sound_v4.wav"),
+          booster_right(r_engine, log, "/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Art/booster.png"),
+          booster_left(r_engine, log, "/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Art/booster.png")
 
     {
         node_phy.position.x = 350;
@@ -41,14 +56,16 @@ public:
         node_draw.sprite.setRotation(corrected_player_angle);
 
         node_draw.my_type = PLAYER;
-        node_draw.origin = {250,250};
-        node_draw.scale = {0.1,0.1};
-        sf::Vector2f hitbox_transformation = {200,200};
+        node_draw.origin = {250, 250};
+        node_draw.scale = {0.1, 0.1};
+        sf::Vector2f hitbox_transformation = {200, 200};
 
         node_draw.node_hitbox.set_transformations(hitbox_transformation);
         node_draw.node_hitbox.set_size(node_draw.sprite);
         node_draw.node_hitbox.set_scale(node_draw.scale);
-        node_draw.node_hitbox.set_origin({node_draw.node_hitbox.get_origin().x + 60, node_draw.node_hitbox.get_origin().y});
+        node_draw.node_hitbox.set_origin({
+            node_draw.node_hitbox.get_origin().x + 60, node_draw.node_hitbox.get_origin().y
+        });
 
         node_draw.sprite.setOrigin(node_draw.origin);
         node_draw.sprite.setScale(node_draw.scale);
@@ -57,6 +74,12 @@ public:
         sound_shoot.setVolume(10);
         sound_die.setVolume(15);
 
+        sound_engine.setVolume(0);
+        sound_engine.play();
+        sound_engine.set_looping(true);
+
+        booster_left.node_draw.sprite.setScale({0.1,0.1});
+        booster_right.node_draw.sprite.setScale({0.1,0.1});
     }
 
     inline int get_lives() const            { return  lives; }
@@ -77,6 +100,13 @@ private:
     Sound_Container sound_shoot;
     Sound_Container sound_hit;
     Sound_Container sound_die;
+    Sound_Container sound_engine;
+
+    Boosters booster_right;
+    Boosters booster_left;
+    bool show_right_b = true;
+    bool show_left_b  = true;
+    int boosters_showing = 0;
 
     std::vector<Sound_Container> booster_sounds;
     int timer_booster = 0;

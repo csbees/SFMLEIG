@@ -61,12 +61,14 @@ private:
 
     Sound_Container sound_engine;
 
+     Draw_node background;
+
     bool playing_reloading_sound = false;
 
     // the index for sound_track
     int current_track_playing = 0;
     const float PLAYER_DEAD_MUSIC_VOLUME = 30;
-    const float MUSIC_VOLUME = 160;
+    const float MUSIC_VOLUME = 100;
 
 
 

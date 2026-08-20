@@ -34,6 +34,11 @@ void Asteroids_Game::run_game()
     else
          window.setIcon(da_icon.getSize(), da_icon.getPixelsPtr());
 
+    if (background.texture.loadFromFile("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Art/space_background.png"))
+        std::cout << "rip, no background now\n";
+
+    background.sprite = sf::Sprite(background.texture);
+
     ImGui::SFML::Init(window);
 
     obj_manager.player_is_dead = true;
@@ -329,6 +334,7 @@ void Asteroids_Game::run_game()
         window.clear();
         if (obj_manager.player_is_dead == false)
             update_objects();
+        window.draw(background.sprite);
         r_engine.draw_objects(window);
         ImGui::SFML::Render(window);
         window.display();
