@@ -75,6 +75,10 @@ void Asteroids_Game::run_game()
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Backslash))
             obj_manager.player_is_dead = true;
 
+        if (obj_manager.player_is_dead == true)
+            window.setMouseCursorVisible(true);
+        else
+            window.setMouseCursorVisible(false);
         // ———————————————————————————————————————
         // SCORE STUFF
         // ———————————————————————————————————————
@@ -158,7 +162,8 @@ void Asteroids_Game::run_game()
             else
                 play_message = "Play Again?";
             char const *casted_play_message = play_message.c_str();
-            if (ImGui::Button(casted_play_message, ImVec2(100.0f,50.0f)))
+            if (ImGui::Button(casted_play_message, ImVec2(100.0f,50.0f)) or
+                sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
             {
                 if (play_message != "Play")
                 {

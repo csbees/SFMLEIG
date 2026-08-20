@@ -39,7 +39,7 @@ void Asteroid::update(float delta_time)
     node_phy.position.x += std::cos(node_phy.angle_radians) * (node_phy.general_velocity) * delta_time;
     node_phy.position.y += std::sin(node_phy.angle_radians) * (node_phy.general_velocity) * delta_time;
 
-    node_draw.sprite.setRotation(sf::degrees(node_phy.angle_degrees));
+    node_draw.sprite.setRotation(sf::degrees(FACE_THIS_WAY));
     node_draw.sprite.setPosition(sf::Vector2f(node_phy.position));
 
     node_draw.node_hitbox.update_hitbox(node_phy.position,sf::degrees(node_phy.angle_degrees));

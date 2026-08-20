@@ -20,7 +20,6 @@ void Asteroid_Manager::place_asteroids()
 
     auto which_side = std::uniform_int_distribution<int>(1, 4)(rng);
     auto pos_r =  std::uniform_real_distribution<float>(0, 500)(rng);
-    // auto degrees_r = std::uniform_real_distribution<float>(0, 90)(rng);
 
     asteroid_phy_node.general_velocity =  std::uniform_real_distribution<float>(speed_range.x, speed_range.y)(rng);
 
@@ -47,11 +46,11 @@ void Asteroid_Manager::place_asteroids()
         asteroid_phy_node.position.x = 800;
         asteroid_phy_node.angle_degrees = 180;
     }
-    create_asteroid(asteroid_phy_node);
-    speed_range.x += 3; speed_range.y += 3;
-    asteroid_creation_scale += 0.0001;
+    speed_range.x += 5; speed_range.y += 5;
+    asteroid_creation_scale += 0.0005f;
     CREATE_ASTER_TIME -= 0.5;
     create_asteroid_timer = CREATE_ASTER_TIME;
+    create_asteroid(asteroid_phy_node);
 }
 
 void Asteroid_Manager::init_package()

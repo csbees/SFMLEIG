@@ -205,8 +205,8 @@ void Player::calculate_movement()
         case sf::Keyboard::Key::A:
             {
                 velocity_turning    -= SPEED_TURNING * p_delta_time;
-                if (sound_engine.get_volume() < 100)
-                    sound_engine.setVolume(sound_engine.get_volume() + 100);
+                if (sound_engine.get_volume() < 170)
+                    sound_engine.setVolume(sound_engine.get_volume() + 170);
             }
             break;
         case sf::Keyboard::Key::D:
