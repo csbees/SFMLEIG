@@ -124,6 +124,8 @@ void Player::player_loses()
     sound_engine.setVolume(0);
     node_draw.flag_render_self = false;
     label_dead = true;
+    booster_left.node_draw.sprite.setPosition({-100,-100});
+    booster_right.node_draw.sprite.setPosition({-100,-100});
 }
 
 // void Player::play_boosters()

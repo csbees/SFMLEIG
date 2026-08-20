@@ -80,6 +80,8 @@ public:
 
         booster_left.node_draw.sprite.setScale({0.1,0.1});
         booster_right.node_draw.sprite.setScale({0.1,0.1});
+        booster_left.node_draw.sprite.setPosition({-100,-100});
+        booster_right.node_draw.sprite.setPosition({-100,-100});
     }
 
     inline int get_lives() const            { return  lives; }
