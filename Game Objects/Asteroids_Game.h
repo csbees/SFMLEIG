@@ -50,6 +50,8 @@ private:
     int timer_add_score = 60;
     bool has_beaten_highscore = false;
 
+    bool space_pressed = false;
+
     bool first_opened_game = true;
 
     std::vector<sf::Music> sound_track;

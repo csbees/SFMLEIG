@@ -79,6 +79,11 @@ void Asteroids_Game::run_game()
             window.setMouseCursorVisible(true);
         else
             window.setMouseCursorVisible(false);
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
+            space_pressed = true;
+        else
+            space_pressed = false;
         // ———————————————————————————————————————
         // SCORE STUFF
         // ———————————————————————————————————————
@@ -163,7 +168,8 @@ void Asteroids_Game::run_game()
                 play_message = "Play Again?";
             char const *casted_play_message = play_message.c_str();
             if (ImGui::Button(casted_play_message, ImVec2(100.0f,50.0f)) or
-                sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
+                (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) and space_pressed == false) or
+                sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter))
             {
                 if (play_message != "Play")
                 {
