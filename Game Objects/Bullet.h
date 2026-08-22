@@ -44,7 +44,7 @@ public:
         node_draw.sprite.setOrigin(node_draw.origin);
 
         std::mt19937 rng(std::random_device{}());
-        auto random_pitch = std::uniform_int_distribution<float>(0.8, 1)(rng);
+        auto random_pitch = std::uniform_real_distribution<float>(0.8, 1)(rng);
 
         sound_hit.set_pitch(random_pitch);
         sound_hit.setVolume(15.f);
