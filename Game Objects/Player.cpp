@@ -29,7 +29,7 @@ void Player::update(float delta_time)
 
     calculate_movement();
     node_phy.angle_radians = node_phy.angle_degrees * (3.14159265f / 180.f);
-    if (last_recorded_direction != node_phy.angle_degrees and new_movement_recorded == true)
+    if ((last_recorded_direction != node_phy.angle_degrees) && (new_movement_recorded == true))
     {
         currently_moving_direction = (last_recorded_direction + node_phy.angle_radians)/2;
     }
@@ -39,7 +39,7 @@ void Player::update(float delta_time)
     velocity_turning *= 0.9;
 
     if  (
-        (node_phy.position.x > 700) or
+        (node_phy.position.x > 700) ||
         (node_phy.position.x < 0)
         )
     {
@@ -47,7 +47,7 @@ void Player::update(float delta_time)
         velocity_x /= 4;
     }
     if  (
-        (node_phy.position.y > 700) or
+        (node_phy.position.y > 700) ||
         (node_phy.position.y < 0)
         )
     {
@@ -193,12 +193,12 @@ void Player::calculate_movement()
         } else if (i == sf::Keyboard::Key::A)
         {
             booster_right.showing = true;
-            if ((boosters_showing != 2) or (boosters_showing != 3)) boosters_showing = 1;
+            if ((boosters_showing != 2) || (boosters_showing != 3)) boosters_showing = 1;
         }
         else if ((i == sf::Keyboard::Key::D))
         {
             booster_left.showing = true;
-            if ((boosters_showing != 2) or (boosters_showing != 1))  boosters_showing = 3;
+            if ((boosters_showing != 2) || (boosters_showing != 1))  boosters_showing = 3;
         }
 
 
@@ -268,7 +268,7 @@ void Boosters::update(sf::Vector2f position, float angle_degrees, bool given_sho
         node_draw.flag_render_self = true;
 
     int iblink_frames = static_cast<int>(blink_frames);
-    if ((iblink_frames % 2) == 1 and node_draw.flag_render_self == true)
+    if (((iblink_frames % 2) == 1) && (node_draw.flag_render_self == true))
     {
         node_draw.flag_render_self = false;
     }

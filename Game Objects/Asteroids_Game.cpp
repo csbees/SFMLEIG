@@ -104,7 +104,7 @@ void Asteroids_Game::run_game()
 
             if (high_score < score)
             {
-                if (has_beaten_highscore == false and high_score != 0)
+                if ((has_beaten_highscore == false) && (high_score != 0))
                     sound_beat_highscore.play();
                 high_score = score;
                 has_beaten_highscore = true;
@@ -170,8 +170,8 @@ void Asteroids_Game::run_game()
                 play_message = "Play Again?";
             char const *casted_play_message = play_message.c_str();
             if (ImGui::Button(casted_play_message, ImVec2(100.0f,50.0f)) or
-                (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) and space_pressed == false) or
-                sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter) or (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)))
+                ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) && (space_pressed == false)) ||
+                sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter) || (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)))
             {
                 if (play_message != "Play")
                 {
@@ -332,12 +332,12 @@ void Asteroids_Game::run_game()
         // ———————————————————————————————————————
         // EVIL ASTEROID
         // ———————————————————————————————————————
-        if (obj_manager.timer_evil_asteroid < 1 and obj_manager.player_is_dead == false)
+        if ((obj_manager.timer_evil_asteroid < 1) && (obj_manager.player_is_dead == false))
         {
             aster_manager.create_evil_asteroid(obj_manager.player_position);
             obj_manager.timer_evil_asteroid = obj_manager.AMOUNT_EVIL_ASTEROID_TIMER;
         }
-        if (!obj_manager.timer_evil_asteroid < 1 and obj_manager.player_is_dead == false)
+        if ((!obj_manager.timer_evil_asteroid < 1) && (obj_manager.player_is_dead == false))
             obj_manager.timer_evil_asteroid--;
 
         // ———————————————————————————————————————

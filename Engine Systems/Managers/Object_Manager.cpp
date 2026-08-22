@@ -17,8 +17,8 @@ void Object_Manager::update_objects(float delta_time)
         e->node_draw.sprite.setPosition(sf::Vector2f(e->node_phy.position));
         e->update(delta_time);
 
-        if (e->node_draw.my_type == OBJECT_TYPE::PLAYER and
-                   e->label_dead == true)
+        if ((e->node_draw.my_type == OBJECT_TYPE::PLAYER) &&
+                   (e->label_dead == true))
         {
             player_is_dead = true;
             return;
@@ -30,8 +30,8 @@ void Object_Manager::update_objects(float delta_time)
             player_shots = e_player.get_available_shots();
             player_position = e_player.node_draw.sprite.getPosition();
         }
-        if (e->node_draw.my_type == OBJECT_TYPE::ASTEROID and
-                   e->label_dead == true)
+        if ((e->node_draw.my_type == OBJECT_TYPE::ASTEROID) &&
+                   (e->label_dead == true))
         {
             auto& the_asteroids = dynamic_cast<Asteroid&>(*e);
             if (the_asteroids.flag_killed_by_player == true)
@@ -81,18 +81,18 @@ void Object_Manager::check_collision() const
             {
                 continue;
             }
-            if (i->node_draw.my_type == ASTEROID and
-                j->node_draw.my_type == ASTEROID)
+            if ((i->node_draw.my_type == ASTEROID) &&
+                (j->node_draw.my_type == ASTEROID))
             {
                 continue;
             }
-            if (i->node_draw.my_type == BULLET and
-               j->node_draw.my_type == BULLET)
+            if ((i->node_draw.my_type == BULLET) &&
+               (j->node_draw.my_type == BULLET))
             {
                 continue;
             }
-            if ((i->node_draw.my_type == BULLET and j->node_draw.my_type == PLAYER) or
-                (j->node_draw.my_type == BULLET and i->node_draw.my_type == PLAYER))
+            if (((i->node_draw.my_type == BULLET) && (j->node_draw.my_type == PLAYER)) ||
+                ((j->node_draw.my_type == BULLET) && (i->node_draw.my_type == PLAYER)))
             {
                 continue;
             }
@@ -111,7 +111,7 @@ void Object_Manager::check_collision() const
             sf::RectangleShape box = i->node_draw.node_hitbox.self;
             sf::RectangleShape other_box = j->node_draw.node_hitbox.self;
 
-            if (box.getGlobalBounds().findIntersection(other_box.getGlobalBounds()) and j->node_draw.ID != i->node_draw.ID)
+            if ((box.getGlobalBounds().findIntersection(other_box.getGlobalBounds())) && (j->node_draw.ID != i->node_draw.ID))
             {
                 i->collided();
                 j->collided();
