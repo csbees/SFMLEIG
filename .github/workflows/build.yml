@@ -56,8 +56,23 @@ jobs:
       - name: Build
         run: cmake --build build --config Release
 
-      - name: Install
-        run: cmake --install build --prefix package --config Release
+      - name: Package
+        shell: bash
+        run: |
+          mkdir -p package
+
+          if [[ "$RUNNER_OS" == "macOS" ]]; then
+            cp -R build/bin/Asteroids.app package/
+            cp -R Assets package/
+
+          elif [[ "$RUNNER_OS" == "Windows" ]]; then
+            cp build/bin/Release/Asteroids.exe package/
+            cp -R Assets package/
+
+          else
+            cp build/bin/Asteroids package/
+            cp -R Assets package/
+          fi
 
       - name: Create ZIP
         shell: bash

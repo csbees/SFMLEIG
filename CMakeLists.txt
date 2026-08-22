@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.29.1)
 
-project(SFMLEIG)
+project(Asteroids)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
@@ -109,5 +109,13 @@ if(PRODUCTION_BUILD)
             DESTINATION Assets
     )
 endif()
+
+if(APPLE)
+    set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
+            MACOSX_BUNDLE TRUE
+    )
+endif()
+
+
 
 
