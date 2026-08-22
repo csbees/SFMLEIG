@@ -30,7 +30,7 @@ void Asteroids_Game::run_game()
 
     sf::Image da_icon;
     if ( !da_icon.loadFromFile(RESOURCES_PATH + std::string("/Art/space_ship_p_v3.png")))
-        std::cout << "Icon failed, rip\n";
+        std::cout << "Icon failed, rip!\n";
     else
          window.setIcon(da_icon.getSize(), da_icon.getPixelsPtr());
 
