@@ -21,8 +21,10 @@ public:
     // Runs every frame; calls for asteroids to be created and gives a location
     void place_asteroids();
     void create_asteroid(const Physics_node& node_phy);
+    void create_asteroid(const Physics_node& node_phy, float given_asteroid_creation_scale);
     void init_package();
     void create_evil_asteroid(sf::Vector2f player_position);
+    void create_massive_asteroid(const sf::Vector2f player_position);
     std::vector<std::unique_ptr<Asteroid>> all_asteroids;
 private:
     void create_asteroid_medium(const Physics_node& node_phy);
@@ -37,13 +39,18 @@ private:
 
     sf::Vector2f speed_range = {100, 300};
     float asteroid_creation_scale = 0.1;
-        float CREATE_ASTER_TIME = 100;
+        float CREATE_ASTER_TIME = 120;
 };
 
 inline void Asteroid_Manager::create_asteroid(const Physics_node& node_phy)
 {
     obj_manager.create_object<Asteroid>(r_engine, log, node_phy, RESOURCES_PATH + std::string("/Art/rock_p.png"),
        this, 1, asteroid_creation_scale);
+}
+inline void Asteroid_Manager::create_asteroid(const Physics_node& node_phy, float given_asteroid_creation_scale)
+{
+    obj_manager.create_object<Asteroid>(r_engine, log, node_phy, RESOURCES_PATH + std::string("/Art/rock_p.png"),
+       this, 2, given_asteroid_creation_scale);
 }
 
 

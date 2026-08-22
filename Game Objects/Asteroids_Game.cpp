@@ -74,18 +74,14 @@ void Asteroids_Game::run_game()
                 window.close();
         }
 
-        if  (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Backslash) )
-            obj_manager.player_is_dead = true;
+        //if  (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Backslash) )
+        //    obj_manager.player_is_dead = true;
 
         if (obj_manager.player_is_dead == true)
             window.setMouseCursorVisible(true);
         else
             window.setMouseCursorVisible(false);
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
-            space_pressed = true;
-        else
-            space_pressed = false;
         // ———————————————————————————————————————
         // SCORE STUFF
         // ———————————————————————————————————————
@@ -171,7 +167,7 @@ void Asteroids_Game::run_game()
             char const *casted_play_message = play_message.c_str();
             if (ImGui::Button(casted_play_message, ImVec2(100.0f,50.0f)) ||
                 ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) && (space_pressed == false)) ||
-                sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter) || (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)))
+                sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter))
             {
                 if (play_message != "Play")
                 {
@@ -341,8 +337,28 @@ void Asteroids_Game::run_game()
             obj_manager.timer_evil_asteroid--;
 
         // ———————————————————————————————————————
+        // BIG ASTEROID
+        // ———————————————————————————————————————
+        if (obj_manager.player_is_dead == true) obj_manager.timer_big_asteroid = obj_manager.GAME_START_AMOUNT_BAT;
+        if ((obj_manager.timer_big_asteroid < 1) && (obj_manager.player_is_dead == false))
+        {
+            aster_manager.create_massive_asteroid(obj_manager.player_position);
+            obj_manager.timer_big_asteroid = obj_manager.AMOUNT_BIG_ASTEROID_TIMER;
+        }
+        if ((!obj_manager.timer_big_asteroid < 1) && (obj_manager.player_is_dead == false))
+        {
+            obj_manager.timer_big_asteroid--;
+            std::cout << "obj_manager.timer_big_asteroid: " << obj_manager.timer_big_asteroid << '\n';
+        }
+
+
+        // ———————————————————————————————————————
         // END FRAME UPDATING
         // ———————————————————————————————————————
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
+            space_pressed = true;
+        else
+            space_pressed = false;
 
         window.clear();
         if (obj_manager.player_is_dead == false)

@@ -4,7 +4,7 @@ project(Asteroids)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-option(PRODUCTION_BUILD ON)
+option(PRODUCTION_BUILD "Build for production" ON)
 
 include(FetchContent)
 
@@ -97,6 +97,12 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
             ImGui-SFML::ImGui-SFML
 )
 
+if(APPLE)
+    set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
+            MACOSX_BUNDLE TRUE
+    )
+endif()
+
 if(PRODUCTION_BUILD)
     install(
             TARGETS ${CMAKE_PROJECT_NAME}
@@ -107,12 +113,6 @@ if(PRODUCTION_BUILD)
     install(
             DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/Assets/"
             DESTINATION Assets
-    )
-endif()
-
-if(APPLE)
-    set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
-            MACOSX_BUNDLE TRUE
     )
 endif()
 

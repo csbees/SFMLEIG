@@ -65,7 +65,8 @@ jobs:
 
           if [[ "$RUNNER_OS" == "macOS" ]]; then
             cp -R build/bin/Asteroids.app package/
-            cp -R Assets package/
+            mkdir -p package/Asteroids.app/Contents/Resources
+            cp -R Assets package/Asteroids.app/Contents/Resources/
 
           elif [[ "$RUNNER_OS" == "Windows" ]]; then
             cp build/bin/Release/Asteroids.exe package/

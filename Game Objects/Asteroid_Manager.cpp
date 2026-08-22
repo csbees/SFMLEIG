@@ -46,9 +46,9 @@ void Asteroid_Manager::place_asteroids()
         asteroid_phy_node.position.x = 800;
         asteroid_phy_node.angle_degrees = 180;
     }
-    speed_range.x += 5; speed_range.y += 5;
-    asteroid_creation_scale += 0.0005f;
-    CREATE_ASTER_TIME -= 1;
+    speed_range.x += 4; speed_range.y += 4;
+    asteroid_creation_scale += 0.0007f;
+    CREATE_ASTER_TIME -= 0.6;
     create_asteroid_timer = CREATE_ASTER_TIME;
     create_asteroid(asteroid_phy_node);
 }
@@ -58,7 +58,7 @@ void Asteroid_Manager::init_package()
     create_asteroid_timer   = 0;
     game_just_started       = true;
     asteroid_creation_scale = 0.1;
-    CREATE_ASTER_TIME       = 60;
+    CREATE_ASTER_TIME       = 120;
     speed_range          = {100, 300};
 }
 
@@ -97,5 +97,43 @@ void Asteroid_Manager::create_evil_asteroid(const sf::Vector2f player_position)
         asteroid_phy_node.angle_degrees = 180;
     }
     create_asteroid(asteroid_phy_node);
+}
+
+void Asteroid_Manager::create_massive_asteroid(const sf::Vector2f player_position)
+{
+    std::cout << "\n\nBig thing created\n\n";
+    Physics_node asteroid_phy_node;
+
+    std::mt19937 rng(std::random_device{}());
+
+    auto which_side = std::uniform_int_distribution<int>(1, 4)(rng);
+    auto how_big = std::uniform_real_distribution<float>(0.4, 0.6)(rng);
+
+    asteroid_phy_node.general_velocity = 70;// std::uniform_real_distribution<float>(speed_range.y , speed_range.y + 100)(rng);
+
+    if (which_side == 1) // top
+    {
+        asteroid_phy_node.position.y = -200;
+        asteroid_phy_node.position.x = player_position.x;
+        asteroid_phy_node.angle_degrees = 90;
+    } else if (which_side == 2) // bottom
+    {
+        asteroid_phy_node.position.y = 900;
+        asteroid_phy_node.position.x = player_position.x;
+        asteroid_phy_node.angle_degrees = -90;
+
+    }
+    if (which_side == 3) // left
+    {
+        asteroid_phy_node.position.y = player_position.y;
+        asteroid_phy_node.position.x = -200;
+        asteroid_phy_node.angle_degrees = 0;
+    } else if (which_side == 4) // right
+    {
+        asteroid_phy_node.position.y = player_position.y;
+        asteroid_phy_node.position.x = 900;
+        asteroid_phy_node.angle_degrees = 180;
+    }
+    create_asteroid(asteroid_phy_node, asteroid_creation_scale + how_big);
 }
 

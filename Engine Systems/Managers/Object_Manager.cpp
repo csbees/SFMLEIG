@@ -34,8 +34,10 @@ void Object_Manager::update_objects(float delta_time)
                    (e->label_dead == true))
         {
             auto& the_asteroids = dynamic_cast<Asteroid&>(*e);
-            if (the_asteroids.flag_killed_by_player == true)
+            if ((the_asteroids.flag_killed_by_player == true) && (the_asteroids.asteroid_type == 1) )
                 score_personal += 500;
+            else if ((the_asteroids.flag_killed_by_player == true) && (the_asteroids.asteroid_type == 2) )
+                score_personal += 2000;
         }
 
         if (e->label_dead)
@@ -123,5 +125,5 @@ void Object_Manager::check_collision() const
 
 void Object_Manager::create_objects_init(Render_engine& r_engine, logger& log)
 {
-    create_object<Player>(r_engine, log, *this,RESOURCES_PATH + std::string("/Art/space_ship_p_V3.png"));
+    create_object<Player>(r_engine, log, *this,RESOURCES_PATH + std::string("/Art/space_ship_p_v3.png"));
 }

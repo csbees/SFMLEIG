@@ -49,15 +49,19 @@ public:
 
         asteroid_type = given_asteroid_type;
 
-        health = DEFAULT_HEATH; //* (given_scale_facter * 10);
+        if (asteroid_type != 2)
+            health = DEFAULT_HEATH;
+        else
+            health = 25;
     }
 
     void update(float) override;
 
     bool flag_killed_by_player = false;
+    int asteroid_type; // 1 - normal, 2 - big
+
 
 private:
-    int asteroid_type; // 1 - big, 2 - medium , 3 - small
     Asteroid_Manager* asteroid_manager_;
     int health;
     const int DEFAULT_HEATH = 2;

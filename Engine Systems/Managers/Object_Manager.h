@@ -54,8 +54,12 @@ public:
     int player_lives = -1;
     int player_shots = 10;
     sf::Vector2f player_position = {-100,0};
+
     const int AMOUNT_EVIL_ASTEROID_TIMER = 300;
     int timer_evil_asteroid = 0;
+    const int GAME_START_AMOUNT_BAT = 2000;
+    const int AMOUNT_BIG_ASTEROID_TIMER = 1200;
+    int timer_big_asteroid = 0;
 
     float score_personal = 0;
 
