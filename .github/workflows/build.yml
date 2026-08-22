@@ -2,7 +2,7 @@ name: Build Asteroids
 
 on:
   push:
-    branches: [ main ]
+    branches: [ SFX_thing ]
 
   workflow_dispatch:
 
