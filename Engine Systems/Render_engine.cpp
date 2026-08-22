@@ -16,8 +16,8 @@ void Render_engine::draw_objects(sf::RenderWindow& window)
             continue;
         }
         if (draw_reel.at(i)->flag_render_self == false) continue;
-        if ((draw_reel.at(i)->sprite.getPosition().x > 800 or draw_reel.at(i)->sprite.getPosition().x < -50) or
-           (draw_reel.at(i)->sprite.getPosition().y > 800 or draw_reel.at(i)->sprite.getPosition().y < -50))
+        if (((draw_reel.at(i)->sprite.getPosition().x > 800) || (draw_reel.at(i)->sprite.getPosition().x < -50)) ||
+           ((draw_reel.at(i)->sprite.getPosition().y > 800 ) || (draw_reel.at(i)->sprite.getPosition().y < -50)))
         {
             draw_reel.at(i)->flag_being_culled = true;
             continue;
