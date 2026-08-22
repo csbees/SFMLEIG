@@ -1,8 +1,8 @@
 
-#include <iostream>
+#include "../Game Objects/Asteroids_Game.h"
 
 int main()
 {
-    std::cout << "Hello world!\n";
-
+    Asteroids_Game game;
+    game.run_game();
 }
