@@ -27,9 +27,9 @@ private:
     bool has_logged = false;
 
     // turn off to stop the logger.
-    bool debug_mode = true;
-    std::ofstream log;
-    std::filesystem::path file_path;
+    bool debug_mode = false;
+    //std::ofstream log;
+    //std::filesystem::path file_path;
 };
 
 #endif //ERROR_LOGGER_H
