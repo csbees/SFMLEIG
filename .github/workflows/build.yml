@@ -1,0 +1,54 @@
+name: Build Asteroids
+
+on:
+  push:
+    branches: [ main ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+
+      matrix:
+        include:
+          - os: ubuntu-latest
+            name: Linux
+
+          - os: windows-latest
+            name: Windows
+
+          - os: macos-latest
+            name: macOS
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure CMake
+        run: >
+          cmake
+          -B build
+          -DCMAKE_BUILD_TYPE=Release
+          -DPRODUCTION_BUILD=ON
+
+      - name: Build
+        run: cmake --build build --config Release
+
+      - name: Install
+        run: cmake --install build --prefix package --config Release
+
+      - name: Create ZIP
+        shell: bash
+        run: |
+          cd package
+          7z a "../Asteroids-${{ matrix.name }}.zip" .
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Asteroids-${{ matrix.name }}
+          path: Asteroids-${{ matrix.name }}.zip

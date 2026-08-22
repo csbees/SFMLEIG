@@ -41,12 +41,12 @@ public:
            Object_Manager& given_obj_manager,
            const std::string& sprite_file = "-1")
         : Entity(given_r_engine, given_log, sprite_file), r_engine(given_r_engine), obj_manager(given_obj_manager),
-          sound_shoot("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/laserShoot.wav"),
-          sound_die("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/death_soundV3.mp3"),
-          sound_hit("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/hitHurt.wav"),
-          sound_engine("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/Engine_sound_v4.wav"),
-          booster_right(r_engine, log, "/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Art/booster.png"),
-          booster_left(r_engine, log, "/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Art/booster.png")
+          sound_shoot(RESOURCES_PATH + std::string("Music/laserShoot.wav")),
+          sound_die(RESOURCES_PATH + std::string("Music/death_soundV3.mp3")),
+          sound_hit(RESOURCES_PATH + std::string("Music/hitHurt.wav")),
+          sound_engine(RESOURCES_PATH + std::string("Music/Engine_sound_v4.wav")),
+          booster_right(r_engine, log, RESOURCES_PATH + std::string("Art/booster.png")),
+          booster_left(r_engine, log, RESOURCES_PATH + std::string("Art/booster.png"))
 
     {
         node_phy.position.x = 350;

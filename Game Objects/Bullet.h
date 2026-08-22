@@ -19,7 +19,7 @@ public:
            const Physics_node& players_phy_node,
            const std::string& sprite_file = "-1")
         : Entity(given_r_engine, given_log, sprite_file),
-          sound_hit("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/bullet_hit_thing.wav")
+          sound_hit(RESOURCES_PATH + std::string("/Music/bullet_hit_thing.wav"))
     {
         node_phy.position = players_phy_node.position;
         node_phy.angle_radians = players_phy_node.angle_radians;

@@ -29,12 +29,12 @@ void Asteroids_Game::run_game()
     window.setFramerateLimit(60);
 
     sf::Image da_icon;
-    if ( !da_icon.loadFromFile("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Art/space_ship_p_v3.png"))
+    if ( !da_icon.loadFromFile(RESOURCES_PATH + std::string("/Art/space_ship_p_v3.png")))
         std::cout << "Icon failed, rip\n";
     else
          window.setIcon(da_icon.getSize(), da_icon.getPixelsPtr());
 
-    if (background.texture.loadFromFile("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Art/space_background.png"))
+    if (background.texture.loadFromFile(RESOURCES_PATH+std::string("/Art/space_background.png")))
         std::cout << "rip, no background now\n";
 
     background.sprite = sf::Sprite(background.texture);
@@ -49,12 +49,12 @@ void Asteroids_Game::run_game()
     r_engine.reset_game();
     init();
 
-    sound_track.emplace_back("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/ACTUAL_Music/track1.wav");
-    sound_track.emplace_back("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/ACTUAL_Music/track2.mp3");
-    sound_track.emplace_back("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/ACTUAL_Music/track3.mp3");
-    sound_track.emplace_back("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/ACTUAL_Music/track4.wav");
-    sound_track.emplace_back("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/ACTUAL_Music/track5.wav");
-    sound_track.emplace_back("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/ACTUAL_Music/track6.wav");
+    sound_track.emplace_back(RESOURCES_PATH + std::string("Music/ACTUAL_Music/track1.wav"));
+    sound_track.emplace_back(RESOURCES_PATH + std::string("Music/ACTUAL_Music/track2.mp3"));
+    sound_track.emplace_back(RESOURCES_PATH + std::string("Music/ACTUAL_Music/track3.mp3"));
+    sound_track.emplace_back(RESOURCES_PATH + std::string("Music/ACTUAL_Music/track4.wav"));
+    sound_track.emplace_back(RESOURCES_PATH + std::string("Music/ACTUAL_Music/track5.wav"));
+    sound_track.emplace_back(RESOURCES_PATH + std::string("Music/ACTUAL_Music/track6.wav"));
     auto rd = std::random_device {};
     auto rng = std::default_random_engine { rd() };
     std::shuffle(std::begin(sound_track), std::end(sound_track), rng);
@@ -72,7 +72,7 @@ void Asteroids_Game::run_game()
                 window.close();
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Backslash))
+        if  (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Backslash) )
             obj_manager.player_is_dead = true;
 
         if (obj_manager.player_is_dead == true)
@@ -169,7 +169,7 @@ void Asteroids_Game::run_game()
             char const *casted_play_message = play_message.c_str();
             if (ImGui::Button(casted_play_message, ImVec2(100.0f,50.0f)) or
                 (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) and space_pressed == false) or
-                sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter))
+                sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter) or (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)))
             {
                 if (play_message != "Play")
                 {

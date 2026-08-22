@@ -123,5 +123,5 @@ void Object_Manager::check_collision() const
 
 void Object_Manager::create_objects_init(Render_engine& r_engine, logger& log)
 {
-    create_object<Player>(r_engine, log, *this,"/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Art/space_ship_p_V3.png");
+    create_object<Player>(r_engine, log, *this,RESOURCES_PATH + std::string("/Art/space_ship_p_V3.png"));
 }

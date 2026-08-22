@@ -48,7 +48,7 @@ void Asteroid_Manager::place_asteroids()
     }
     speed_range.x += 5; speed_range.y += 5;
     asteroid_creation_scale += 0.0005f;
-    CREATE_ASTER_TIME -= 0.5;
+    CREATE_ASTER_TIME -= 1;
     create_asteroid_timer = CREATE_ASTER_TIME;
     create_asteroid(asteroid_phy_node);
 }
