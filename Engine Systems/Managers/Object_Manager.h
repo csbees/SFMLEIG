@@ -8,6 +8,7 @@
 #include <vector>
 #include "../Entity.h"
 #include "../../Game Objects/Asteroid.h"
+#include "../../Engine Systems/resource_path.h"
 
 class Asteroid_Manager;
 

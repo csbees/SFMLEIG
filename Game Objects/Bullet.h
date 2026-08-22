@@ -7,6 +7,7 @@
 
 #include "../Engine Systems/Entity.h"
 #include "../Engine Systems/sound_container.h"
+#include "../Engine Systems/resource_path.h"
 
 class Bullet final : public Entity
 {

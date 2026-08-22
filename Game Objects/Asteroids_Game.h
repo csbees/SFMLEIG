@@ -13,6 +13,8 @@
 #include "../Engine Systems/Managers/Object_Manager.h"
 #include "SFML/Audio/Music.hpp"
 
+#include "../Engine Systems/resource_path.h"
+
 class Asteroids_Game final : public Game
 {
 public:

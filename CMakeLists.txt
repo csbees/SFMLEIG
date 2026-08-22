@@ -74,30 +74,21 @@ add_executable(
         "Engine Systems/Physics_node.h"
         "Engine Systems/sound_container.h"
         "Engine Systems/node_hitbox.h"
+        "Engine Systems/resource_path.cpp"
+        "Engine Systems/resource_path.h"
+        "Engine Systems/resource_path.cpp"
 )
 
-#if(PRODUCTION_BUILD)
-#    # setup the ASSETS_PATH macro to be in the root folder of your exe
-#    target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC RESOURCES_PATH="./Assets/")
-#
-#    target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC PRODUCTION_BUILD=1)
-#
-#else()
-#    # This is useful to get an ASSETS_PATH in your IDE during development
-#    target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC RESOURCES_PATH="${CMAKE_CURRENT_SOURCE_DIR}/Assets/")
-#    target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC PRODUCTION_BUILD=0)
-#
-#endif()
-
-if(APPLE)
+if(PRODUCTION_BUILD)
     target_compile_definitions(
             "${CMAKE_PROJECT_NAME}"
-            PUBLIC RESOURCES_PATH="../Resources/Assets/"
+            PUBLIC PRODUCTION_BUILD=1
     )
 else()
     target_compile_definitions(
             "${CMAKE_PROJECT_NAME}"
-            PUBLIC RESOURCES_PATH="./Assets/"
+            PUBLIC PRODUCTION_BUILD=0
+            DEVELOPMENT_RESOURCES_PATH="${CMAKE_CURRENT_SOURCE_DIR}/Assets/"
     )
 endif()
 
@@ -113,35 +104,11 @@ if(APPLE)
     set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
             MACOSX_BUNDLE TRUE
     )
-endif()
 
-if(PRODUCTION_BUILD)
-
-    if(APPLE)
-        target_compile_definitions(
-                "${CMAKE_PROJECT_NAME}"
-                PUBLIC RESOURCES_PATH="../Resources/Assets/"
-        )
-    else()
-        target_compile_definitions(
-                "${CMAKE_PROJECT_NAME}"
-                PUBLIC RESOURCES_PATH="./Assets/"
-        )
-    endif()
-
-    target_compile_definitions(
+    target_link_libraries(
             "${CMAKE_PROJECT_NAME}"
-            PUBLIC PRODUCTION_BUILD=1
-    )
-
-else()
-    target_compile_definitions(
-            "${CMAKE_PROJECT_NAME}"
-            PUBLIC RESOURCES_PATH="${CMAKE_CURRENT_SOURCE_DIR}/Assets/"
-    )
-
-    target_compile_definitions(
-            "${CMAKE_PROJECT_NAME}"
-            PUBLIC PRODUCTION_BUILD=0
+            PRIVATE
+            "-framework CoreFoundation"
     )
 endif()
+
