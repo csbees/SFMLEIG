@@ -114,16 +114,16 @@ void Asteroids_Game::run_game()
         // ———————————————————————————————————————
         // MUSIC
         // ———————————————————————————————————————
-        if (obj_manager.player_is_dead == true and
-            sound_track.at(current_track_playing).getVolume() > PLAYER_DEAD_MUSIC_VOLUME)
+        if ((obj_manager.player_is_dead == true) &&
+            (sound_track.at(current_track_playing).getVolume() > PLAYER_DEAD_MUSIC_VOLUME))
         {
             sound_track.at(current_track_playing).setVolume(sound_track.at(current_track_playing).getVolume() - 1 );
-        } else if((obj_manager.player_is_dead == false and
-            sound_track.at(current_track_playing).getVolume() < MUSIC_VOLUME))
+        } else if (((obj_manager.player_is_dead == false) &&
+            (sound_track.at(current_track_playing).getVolume() < MUSIC_VOLUME)))
         {
             sound_track.at(current_track_playing).setVolume(sound_track.at(current_track_playing).getVolume() + 1 );
-        } else if((obj_manager.player_is_dead == false and
-            sound_track.at(current_track_playing).getVolume() > MUSIC_VOLUME))
+        } else if (((obj_manager.player_is_dead == false) &&
+            (sound_track.at(current_track_playing).getVolume() > MUSIC_VOLUME)))
         {
             sound_track.at(current_track_playing).setVolume(MUSIC_VOLUME);
         }
@@ -169,7 +169,7 @@ void Asteroids_Game::run_game()
             else
                 play_message = "Play Again?";
             char const *casted_play_message = play_message.c_str();
-            if (ImGui::Button(casted_play_message, ImVec2(100.0f,50.0f)) or
+            if (ImGui::Button(casted_play_message, ImVec2(100.0f,50.0f)) ||
                 ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) && (space_pressed == false)) ||
                 sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter) || (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)))
             {

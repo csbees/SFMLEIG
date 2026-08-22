@@ -76,7 +76,7 @@ void Object_Manager::check_collision() const
             // TODO: This doesn't work, add a flag for god mode or something
             // Wait, this doesn't work? WHY? ITS BEEN WORKING THOUGH
             if (i->node_draw.ID == j->node_draw.ID) continue;
-            if (i->node_draw.flag_render_self == false or
+            if (i->node_draw.flag_render_self == false ||
                 j->node_draw.flag_render_self == false)
             {
                 continue;
