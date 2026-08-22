@@ -52,6 +52,7 @@ jobs:
           -B build
           -DCMAKE_BUILD_TYPE=Release
           -DPRODUCTION_BUILD=ON
+          -DCMAKE_OSX_DEPLOYMENT_TARGET=12.0
 
       - name: Build
         run: cmake --build build --config Release

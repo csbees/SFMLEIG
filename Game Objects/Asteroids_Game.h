@@ -18,11 +18,10 @@ class Asteroids_Game final : public Game
 public:
     Asteroids_Game()
         : obj_manager(r_engine), aster_manager(r_engine,log, obj_manager),
-          sound_play_again("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/start_game.wav"),
-          sound_beat_highscore("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/beat_highscore.mp3"),
-          sound_engine("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/UGG.mp3"),
-          sound_finish_reloading("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/finish_reload.mp3"),
-          sound_reload("/Users/chris/CLionProjects/Engine/SFMLEIG 1.0/Assets/Music/reload_sound_again.wav")
+          sound_play_again(RESOURCES_PATH + std::string("/Music/start_game.wav")),
+          sound_beat_highscore(RESOURCES_PATH + std::string("/Music/beat_highscore.mp3")),
+          sound_finish_reloading(RESOURCES_PATH + std::string("/Music/finish_reload.mp3")),
+          sound_reload(RESOURCES_PATH + std::string("/Music/reload_sound_again.wav"))
     {}
     // Sets up essential systems
     void init() override;
@@ -60,8 +59,6 @@ private:
     Sound_Container sound_beat_highscore;
     Sound_Container sound_reload;
     Sound_Container sound_finish_reloading;
-
-    Sound_Container sound_engine;
 
      Draw_node background;
 
