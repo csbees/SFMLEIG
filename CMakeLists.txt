@@ -76,17 +76,29 @@ add_executable(
         "Engine Systems/node_hitbox.h"
 )
 
-if(PRODUCTION_BUILD)
-    # setup the ASSETS_PATH macro to be in the root folder of your exe
-    target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC RESOURCES_PATH="./Assets/")
+#if(PRODUCTION_BUILD)
+#    # setup the ASSETS_PATH macro to be in the root folder of your exe
+#    target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC RESOURCES_PATH="./Assets/")
+#
+#    target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC PRODUCTION_BUILD=1)
+#
+#else()
+#    # This is useful to get an ASSETS_PATH in your IDE during development
+#    target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC RESOURCES_PATH="${CMAKE_CURRENT_SOURCE_DIR}/Assets/")
+#    target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC PRODUCTION_BUILD=0)
+#
+#endif()
 
-    target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC PRODUCTION_BUILD=1)
-
+if(APPLE)
+    target_compile_definitions(
+            "${CMAKE_PROJECT_NAME}"
+            PUBLIC RESOURCES_PATH="../Resources/Assets/"
+    )
 else()
-    # This is useful to get an ASSETS_PATH in your IDE during development
-    target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC RESOURCES_PATH="${CMAKE_CURRENT_SOURCE_DIR}/Assets/")
-    target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC PRODUCTION_BUILD=0)
-
+    target_compile_definitions(
+            "${CMAKE_PROJECT_NAME}"
+            PUBLIC RESOURCES_PATH="./Assets/"
+    )
 endif()
 
 target_compile_features(${CMAKE_PROJECT_NAME} PRIVATE cxx_std_17)
@@ -133,5 +145,3 @@ else()
             PUBLIC PRODUCTION_BUILD=0
     )
 endif()
-
-
