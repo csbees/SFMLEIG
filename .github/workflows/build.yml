@@ -32,11 +32,7 @@ jobs:
         if: matrix.name == 'Linux'
         run: |
           sudo apt-get update
-          - name: Install Linux dependencies
-  if: matrix.name == 'Linux'
-  run: |
-    sudo apt-get update
-    sudo apt-get install -y libx11-dev libxrandr-dev libxcursor-dev libxi-dev libudev-dev libopenal-dev libflac-dev libvorbis-dev libogg-dev libgl1-mesa-dev
+          sudo apt-get install -y libx11-dev libxrandr-dev libxcursor-dev libxi-dev libudev-dev libopenal-dev libflac-dev libvorbis-dev libogg-dev libgl1-mesa-dev
 
       - name: Configure CMake
         run: >
@@ -62,3 +58,4 @@ jobs:
         with:
           name: Asteroids-${{ matrix.name }}
           path: Asteroids-${{ matrix.name }}.zip
+          if-no-files-found: error
