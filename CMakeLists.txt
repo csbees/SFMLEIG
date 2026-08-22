@@ -104,18 +104,34 @@ if(APPLE)
 endif()
 
 if(PRODUCTION_BUILD)
-    install(
-            TARGETS ${CMAKE_PROJECT_NAME}
-            RUNTIME DESTINATION .
-            BUNDLE DESTINATION .
+
+    if(APPLE)
+        target_compile_definitions(
+                "${CMAKE_PROJECT_NAME}"
+                PUBLIC RESOURCES_PATH="../Resources/Assets/"
+        )
+    else()
+        target_compile_definitions(
+                "${CMAKE_PROJECT_NAME}"
+                PUBLIC RESOURCES_PATH="./Assets/"
+        )
+    endif()
+
+    target_compile_definitions(
+            "${CMAKE_PROJECT_NAME}"
+            PUBLIC PRODUCTION_BUILD=1
     )
 
-    install(
-            DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/Assets/"
-            DESTINATION Assets
+else()
+    target_compile_definitions(
+            "${CMAKE_PROJECT_NAME}"
+            PUBLIC RESOURCES_PATH="${CMAKE_CURRENT_SOURCE_DIR}/Assets/"
+    )
+
+    target_compile_definitions(
+            "${CMAKE_PROJECT_NAME}"
+            PUBLIC PRODUCTION_BUILD=0
     )
 endif()
-
-
 
 
