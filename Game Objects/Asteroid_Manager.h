@@ -37,12 +37,12 @@ private:
 
     sf::Vector2f speed_range = {100, 300};
     float asteroid_creation_scale = 0.1;
-    float CREATE_ASTER_TIME = 100;
+        float CREATE_ASTER_TIME = 100;
 };
 
 inline void Asteroid_Manager::create_asteroid(const Physics_node& node_phy)
 {
-    obj_manager.create_object<Asteroid>(r_engine, log, node_phy ,RESOURCES_PATH + std::string("/Art/rock_p.png"),
+    obj_manager.create_object<Asteroid>(r_engine, log, node_phy, RESOURCES_PATH + std::string("/Art/rock_p.png"),
        this, 1, asteroid_creation_scale);
 }
 
