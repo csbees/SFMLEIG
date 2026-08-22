@@ -39,7 +39,9 @@ void Asteroids_Game::run_game()
 
     background.sprite = sf::Sprite(background.texture);
 
-    ImGui::SFML::Init(window);
+    if (ImGui::SFML::Init(window))
+        std::cout << "it failed I think?\n";
+
 
     obj_manager.player_is_dead = true;
     float f_player_shots = 0;
