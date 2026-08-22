@@ -11,7 +11,7 @@
 
 logger::logger()
 {
-    if (debug_mode == false) return;
+    return;
 
     auto time = std::chrono::system_clock::now();
     std::time_t end_time = std::chrono::system_clock::to_time_t(time);
@@ -41,6 +41,7 @@ logger::logger()
 
 logger::~logger()
 {
+    return;
     if (has_logged == false)
     {
         if (log)
@@ -53,6 +54,7 @@ logger::~logger()
 
 bool logger::log_info(const std::string& info, const std::string& author)
 {
+    return true;
     if (debug_mode == false) return true;
 
     auto time = std::chrono::system_clock::now();
@@ -74,6 +76,7 @@ bool logger::log_info(const std::string& info, const std::string& author)
 
 bool logger::log_error(const std::string& error, const std::string& author)
 {
+    return true;
     if (debug_mode == false) return true;
     auto time = std::chrono::system_clock::now();
     std::time_t end_time = std::chrono::system_clock::to_time_t(time);
