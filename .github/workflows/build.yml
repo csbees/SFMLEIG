@@ -41,7 +41,8 @@ jobs:
             libopenal-dev \
             libflac-dev \
             libvorbis-dev \
-            libogg-dev
+            libogg-dev \ 
+            libgl1-mesa-dev
 
       - name: Configure CMake
         run: >
