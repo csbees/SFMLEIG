@@ -4,6 +4,8 @@ project(SFMLEIG)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
+option(PRODUCTION_BUILD ON)
+
 include(FetchContent)
 
 
@@ -21,6 +23,11 @@ FetchContent_Declare(
         GIT_REPOSITORY https://github.com/ocornut/imgui
         GIT_TAG v1.91.9b
 )
+
+set(SFML_BUILD_NETWORK OFF CACHE BOOL "" FORCE)
+set(SFML_BUILD_WINDOW ON CACHE BOOL "" FORCE)
+set(SFML_BUILD_GRAPHICS ON CACHE BOOL "" FORCE)
+set(SFML_BUILD_AUDIO ON CACHE BOOL "" FORCE)
 
 FetchContent_MakeAvailable(SFML)
 FetchContent_MakeAvailable(imgui)
@@ -65,10 +72,22 @@ add_executable(
         "Game Objects/Asteroid_Manager.cpp"
         "Game Objects/Asteroid_Manager.h"
         "Engine Systems/Physics_node.h"
-        "Engine Systems/Physics_node.h"
         "Engine Systems/sound_container.h"
-
+        "Engine Systems/node_hitbox.h"
 )
+
+if(PRODUCTION_BUILD)
+    # setup the ASSETS_PATH macro to be in the root folder of your exe
+    target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC RESOURCES_PATH="./Assets/")
+
+    target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC PRODUCTION_BUILD=1)
+
+else()
+    # This is useful to get an ASSETS_PATH in your IDE during development
+    target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC RESOURCES_PATH="${CMAKE_CURRENT_SOURCE_DIR}/Assets/")
+    target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC PRODUCTION_BUILD=0)
+
+endif()
 
 target_compile_features(${CMAKE_PROJECT_NAME} PRIVATE cxx_std_17)
 target_link_libraries(${CMAKE_PROJECT_NAME}
@@ -78,5 +97,17 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
             ImGui-SFML::ImGui-SFML
 )
 
+if(PRODUCTION_BUILD)
+    install(
+            TARGETS ${CMAKE_PROJECT_NAME}
+            RUNTIME DESTINATION .
+            BUNDLE DESTINATION .
+    )
+
+    install(
+            DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/Assets/"
+            DESTINATION Assets
+    )
+endif()
 
 
