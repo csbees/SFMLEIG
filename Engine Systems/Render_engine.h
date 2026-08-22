@@ -5,7 +5,7 @@
 #pragma once
 
 #include <vector>
-#include <SfML/Graphics.hpp>
+#include <SFML/Graphics.hpp>
 
 #include "Draw_node.h"
 
