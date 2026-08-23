@@ -245,7 +245,7 @@ void Player::shoot()
 {
     if (my_bullets < 1) return;
     if (shoot_timer > 1) return;
-    obj_manager.create_object<Bullet>(r_engine, log, node_phy ,RESOURCES_PATH + std::string("Art/Bullet_V3.png"));
+    obj_manager.create_object<Bullet>(r_engine, log, node_phy ,RESOURCES_PATH + std::string("/Art/Bullet_V3.png"));
     shoot_timer = 2.5;
 
     std::mt19937 rng(std::random_device{}());

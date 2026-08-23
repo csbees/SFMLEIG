@@ -348,7 +348,6 @@ void Asteroids_Game::run_game()
         if ((!obj_manager.timer_big_asteroid < 1) && (obj_manager.player_is_dead == false))
         {
             obj_manager.timer_big_asteroid--;
-            std::cout << "obj_manager.timer_big_asteroid: " << obj_manager.timer_big_asteroid << '\n';
         }
 
 
