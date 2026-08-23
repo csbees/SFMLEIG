@@ -51,12 +51,12 @@ void Asteroids_Game::run_game()
     r_engine.reset_game();
     init();
 
-    sound_track.emplace_back(RESOURCES_PATH + std::string("Music/ACTUAL_Music/track1.wav"));
-    sound_track.emplace_back(RESOURCES_PATH + std::string("Music/ACTUAL_Music/track2.mp3"));
-    sound_track.emplace_back(RESOURCES_PATH + std::string("Music/ACTUAL_Music/track3.mp3"));
-    sound_track.emplace_back(RESOURCES_PATH + std::string("Music/ACTUAL_Music/track4.wav"));
-    sound_track.emplace_back(RESOURCES_PATH + std::string("Music/ACTUAL_Music/track5.wav"));
-    sound_track.emplace_back(RESOURCES_PATH + std::string("Music/ACTUAL_Music/track6.wav"));
+    sound_track.emplace_back(RESOURCES_PATH + std::string("/Music/ACTUAL_Music/track1.wav"));
+    sound_track.emplace_back(RESOURCES_PATH + std::string("/Music/ACTUAL_Music/track2.mp3"));
+    sound_track.emplace_back(RESOURCES_PATH + std::string("/Music/ACTUAL_Music/track3.mp3"));
+    sound_track.emplace_back(RESOURCES_PATH + std::string("/Music/ACTUAL_Music/track4.wav"));
+    sound_track.emplace_back(RESOURCES_PATH + std::string("/Music/ACTUAL_Music/track5.wav"));
+    sound_track.emplace_back(RESOURCES_PATH + std::string("/Music/ACTUAL_Music/track6.wav"));
     auto rd = std::random_device {};
     auto rng = std::default_random_engine { rd() };
     std::shuffle(std::begin(sound_track), std::end(sound_track), rng);
